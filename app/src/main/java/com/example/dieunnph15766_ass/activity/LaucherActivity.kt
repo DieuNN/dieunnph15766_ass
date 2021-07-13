@@ -13,6 +13,7 @@ class LaucherActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //using Database Inspector to check whether I created database
+
         val database:Database = Database(this)
         val userDB:UserDB = UserDB(database)
         val incomeDB: IncomeDB = IncomeDB(database)
@@ -34,6 +35,7 @@ class LaucherActivity : AppCompatActivity() {
 
         var outcomeType  = OutcomeType(123, "outcome type")
         outcomeTypeDB.newOutcomeType(outcomeType)
+        //database created successfully, use Database Inspector to check
 
     }
 }
