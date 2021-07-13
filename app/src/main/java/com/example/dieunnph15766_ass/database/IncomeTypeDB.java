@@ -59,8 +59,8 @@ public class IncomeTypeDB implements IncomeTypeDao {
         sqliteDatabase = db.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("incomeTypeID", incomeType.getIncomeTypeID());
-        values.put("incomeTypeName", incomeType.getIncomeTypeName());
+        values.put("INCOME_TYPE_ID", incomeType.getIncomeTypeID());
+        values.put("INCOME_TYPE_NAME", incomeType.getIncomeTypeName());
 
         return sqliteDatabase.update(Database.TABLE_INCOME_TYPE, values, "incomeTypeID = ?", new String[]{incomeType.getIncomeTypeID() +""}) > 0;
     }
@@ -76,8 +76,8 @@ public class IncomeTypeDB implements IncomeTypeDao {
         sqliteDatabase = db.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("incomeTypeID", incomeType.getIncomeTypeID());
-        values.put("incomeTypeName", incomeType.getIncomeTypeName());
+        values.put("INCOME_TYPE_ID", incomeType.getIncomeTypeID());
+        values.put("INCOME_TYPE_NAME", incomeType.getIncomeTypeName());
 
         return sqliteDatabase.insert(Database.TABLE_INCOME_TYPE, null, values) > 0;
     }

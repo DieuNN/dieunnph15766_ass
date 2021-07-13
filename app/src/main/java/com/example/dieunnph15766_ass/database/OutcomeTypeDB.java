@@ -58,8 +58,8 @@ public class OutcomeTypeDB implements OutcomeTypeDao {
 
         ContentValues values = new ContentValues();
 
-        values.put("outcomeID", outcome.getOutcomeTypeID());
-        values.put("outcomeName", outcome.getOutcomeTypeName());
+        values.put("OUTCOME_TYPE_ID", outcome.getOutcomeTypeID());
+        values.put("OUTCOME_TYPE_NAME", outcome.getOutcomeTypeName());
 
         return sqliteDatabase.insert(Database.TABLE_OUTCOME_TYPE, null, values) > 0;
     }
@@ -77,8 +77,8 @@ public class OutcomeTypeDB implements OutcomeTypeDao {
 
         ContentValues values = new ContentValues();
 
-        values.put("outcomeID", outcome.getOutcomeTypeID());
-        values.put("outcomeName", outcome.getOutcomeTypeName());
+        values.put("OUTCOME_TYPE_ID", outcome.getOutcomeTypeID());
+        values.put("OUTCOME_TYPE_NAME", outcome.getOutcomeTypeName());
 
         return sqliteDatabase.update(Database.TABLE_OUTCOME_TYPE, values, "outcomeID = ?", new String[]{outcome.getOutcomeTypeID() + ""}) > 0;
     }

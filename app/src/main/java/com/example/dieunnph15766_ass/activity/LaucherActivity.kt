@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.dieunnph15766_ass.R
-import com.example.dieunnph15766_ass.database.Database
-import com.example.dieunnph15766_ass.database.UserDB
-import com.example.dieunnph15766_ass.model.User
+import com.example.dieunnph15766_ass.database.*
+import com.example.dieunnph15766_ass.model.*
 
 class LaucherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,9 +15,25 @@ class LaucherActivity : AppCompatActivity() {
         //using Database Inspector to check whether I created database
         val database:Database = Database(this)
         val userDB:UserDB = UserDB(database)
-        Log.e("e", userDB.newUser(User(123, "Dieu", "03e234")).toString())
+        val incomeDB: IncomeDB = IncomeDB(database)
+        val outcomeDB = OutcomeDB(database)
+        val incomeTypeDB = IncomeTypeDB(database)
+        val outcomeTypeDB = OutcomeTypeDB(database)
 
+        var user = User(123, "Dieu", "Dep trai")
+        userDB.newUser(user)
 
+        var income = Income(123, "income name", "income date", "income type name", 123, 100)
+        incomeDB.newIncome(income)
+
+        var outcome = Outcome(123, "income name", "income date", "income type name", 123, 100)
+        outcomeDB.newOutcome(outcome)
+
+        var incomeType = IncomeType(123, "outcome type")
+        incomeTypeDB.newIncomeType(incomeType)
+
+        var outcomeType  = OutcomeType(123, "outcome type")
+        outcomeTypeDB.newOutcomeType(outcomeType)
 
     }
 }

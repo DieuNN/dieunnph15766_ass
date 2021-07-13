@@ -61,12 +61,12 @@ public class IncomeDB implements IncomeDao {
         sqliteDatabase = db.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("incomeID", income.getIncomeID());
-        values.put("incomeName", income.getIncomeName());
-        values.put("incomeDate", income.getIncomeDate());
-        values.put("incomeTypeName", income.getIncomeTypeName());
-        values.put("userID", income.getUserID());
-        values.put("incomeAmount", income.getIncomeAmount());
+        values.put("INCOME_ID", income.getIncomeID());
+        values.put("INCOME_NAME", income.getIncomeName());
+        values.put("INCOME_DATE", income.getIncomeDate());
+        values.put("INCOME_TYPE_NAME", income.getIncomeTypeName());
+        values.put("USER_ID", income.getUserID());
+        values.put("INCOME_AMOUNT", income.getIncomeAmount());
 
         return sqliteDatabase.insert(Database.TABLE_INCOME, null, values) >0;
     }
@@ -76,12 +76,12 @@ public class IncomeDB implements IncomeDao {
         sqliteDatabase = db.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("incomeID", income.getIncomeID());
-        values.put("incomeName", income.getIncomeName());
-        values.put("incomeDate", income.getIncomeDate());
-        values.put("incomeTypeName", income.getIncomeTypeName());
-        values.put("userID", income.getUserID());
-        values.put("incomeAmount", income.getIncomeAmount());
+        values.put("INCOME_ID", income.getIncomeID());
+        values.put("INCOME_NAME", income.getIncomeName());
+        values.put("INCOME_DATE", income.getIncomeDate());
+        values.put("INCOME_TYPE_NAME", income.getIncomeTypeName());
+        values.put("USER_ID", income.getUserID());
+        values.put("INCOME_AMOUNT", income.getIncomeAmount());
 
         return sqliteDatabase.update(Database.TABLE_INCOME, values, "incomeID = ?", new String[]{""+income.getIncomeID()}) > 0;
     }

@@ -58,12 +58,12 @@ public class OutcomeDB implements OutcomeDao {
         sqliteDatabase = db.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("outcomeID", outcome.getOutcomeID());
-        values.put("outcomeName", outcome.getOutcomeName());
-        values.put("outcomeDate", outcome.getOutcomeDate());
-        values.put("outcomeTypeName", outcome.getOutcomeTypeName());
-        values.put("userID", outcome.getUserID());
-        values.put("outcomeAmount", outcome.getOutcomeAmount());
+        values.put("OUTCOME_ID", outcome.getOutcomeID());
+        values.put("OUTCOME_NAME", outcome.getOutcomeName());
+        values.put("OUTCOME_DATE", outcome.getOutcomeDate());
+        values.put("OUTCOME_TYPE_NAME", outcome.getOutcomeTypeName());
+        values.put("USER_ID", outcome.getUserID());
+        values.put("OUTCOME_AMOUNT", outcome.getOutcomeAmount());
 
         return sqliteDatabase.insert(Database.TABLE_OUTCOME, null,values) > 0;
 
@@ -74,12 +74,12 @@ public class OutcomeDB implements OutcomeDao {
         sqliteDatabase = db.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("outcomeID", outcome.getOutcomeID());
-        values.put("outcomeName", outcome.getOutcomeName());
-        values.put("outcomeDate", outcome.getOutcomeDate());
-        values.put("outcomeTypeName", outcome.getOutcomeTypeName());
-        values.put("userID", outcome.getUserID());
-        values.put("outcomeAmount", outcome.getOutcomeAmount());
+        values.put("OUTCOME_ID", outcome.getOutcomeID());
+        values.put("OUTCOME_NAME", outcome.getOutcomeName());
+        values.put("OUTCOME_DATE", outcome.getOutcomeDate());
+        values.put("OUTCOME_TYPE_NAME", outcome.getOutcomeTypeName());
+        values.put("USER_ID", outcome.getUserID());
+        values.put("OUTCOME_AMOUNT", outcome.getOutcomeAmount());
 
         return sqliteDatabase.update(Database.TABLE_OUTCOME, values, "outcomeID = ?", new String[] { outcome.getOutcomeID() +""}) > 0;
     }

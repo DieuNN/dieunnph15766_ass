@@ -4,10 +4,9 @@ class IncomeType {
     var incomeTypeID:Long? = null
     var incomeTypeName:String? = null
 
-    constructor(incomeTypeID: Long?) {
+    constructor()
+    constructor(incomeTypeID: Long?, incomeTypeName: String?) {
         this.incomeTypeID = incomeTypeID
         this.incomeTypeName = incomeTypeName
     }
-
-    constructor()
 }

@@ -59,9 +59,9 @@ public class UserDB implements UserDao {
 
         ContentValues values = new ContentValues();
 
-        values.put("userID", user.getUserId());
-        values.put("username", user.getUsername());
-        values.put("password", user.getPassword());
+        values.put("USER_ID", user.getUserId());
+        values.put("USERNAME", user.getUsername());
+        values.put("PASSWORD", user.getPassword());
 
         return sqliteDatabase.insert(Database.TABLE_USER, null, values) >0;
     }
