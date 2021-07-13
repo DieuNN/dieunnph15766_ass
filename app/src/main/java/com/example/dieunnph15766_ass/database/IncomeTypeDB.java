@@ -62,13 +62,13 @@ public class IncomeTypeDB implements IncomeTypeDao {
         values.put("INCOME_TYPE_ID", incomeType.getIncomeTypeID());
         values.put("INCOME_TYPE_NAME", incomeType.getIncomeTypeName());
 
-        return sqliteDatabase.update(Database.TABLE_INCOME_TYPE, values, "incomeTypeID = ?", new String[]{incomeType.getIncomeTypeID() +""}) > 0;
+        return sqliteDatabase.update(Database.TABLE_INCOME_TYPE, values, "INCOME_TYPE_ID = ?", new String[]{incomeType.getIncomeTypeID() +""}) > 0;
     }
 
     @Override
     public boolean removeIncomeType(@NotNull IncomeType incomeType) {
         sqliteDatabase = db.getWritableDatabase();
-        return sqliteDatabase.delete(Database.TABLE_INCOME_TYPE, "incomeTypeID = ?", new String[]{incomeType.getIncomeTypeID() + ""}) > 0;
+        return sqliteDatabase.delete(Database.TABLE_INCOME_TYPE, "INCOME_TYPE_ID = ?", new String[]{incomeType.getIncomeTypeID() + ""}) > 0;
     }
 
     @Override

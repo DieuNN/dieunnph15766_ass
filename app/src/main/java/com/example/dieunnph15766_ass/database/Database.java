@@ -19,7 +19,7 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableUser = "CREATE TABLE " +  TABLE_USER + "(USER_ID INTEGER PRIMARY KEY, USERNAME TEXT, PASSWORD TEXT)";
+        String createTableUser = "CREATE TABLE " +  TABLE_USER + " (USER_ID INTEGER PRIMARY KEY, USERNAME TEXT, PASSWORD TEXT)";
         db.execSQL(createTableUser);
 
         String createTableIncomeType = "CREATE TABLE " +  TABLE_INCOME_TYPE + "(INCOME_TYPE_ID INTEGER PRIMARY KEY , INCOME_TYPE_NAME TEXT)";
@@ -37,13 +37,6 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(newVersion < oldVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_INCOME_TYPE);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_OUTCOME_TYPE);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_INCOME);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_OUTCOME);
 
-        }
     }
 }

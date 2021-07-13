@@ -32,6 +32,7 @@ public class IncomeDB implements IncomeDao {
             cursor.moveToFirst();
             while(!cursor.isAfterLast()) {
                 Income income = new  Income();
+                list =new ArrayList<>();
                 income.setIncomeID(cursor.getLong(0));
                 income.setIncomeName(cursor.getString(1));
                 income.setIncomeDate(cursor.getString(2));
@@ -83,12 +84,12 @@ public class IncomeDB implements IncomeDao {
         values.put("USER_ID", income.getUserID());
         values.put("INCOME_AMOUNT", income.getIncomeAmount());
 
-        return sqliteDatabase.update(Database.TABLE_INCOME, values, "incomeID = ?", new String[]{""+income.getIncomeID()}) > 0;
+        return sqliteDatabase.update(Database.TABLE_INCOME, values, "INCOME_ID = ?", new String[]{""+income.getIncomeID()}) > 0;
     }
 
     @Override
     public boolean removeIncome(@NotNull Income income) {
         sqliteDatabase = db.getWritableDatabase();
-        return sqliteDatabase.delete(Database.TABLE_INCOME, "incomeID = ?", new String[]{"" + income.getIncomeID()}) > 0;
+        return sqliteDatabase.delete(Database.TABLE_INCOME, "INCOME_ID = ?", new String[]{"" + income.getIncomeID()}) > 0;
     }
 }

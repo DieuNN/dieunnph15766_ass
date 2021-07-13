@@ -2,6 +2,8 @@ package com.example.dieunnph15766_ass.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.example.dieunnph15766_ass.R
 import com.example.dieunnph15766_ass.database.*
@@ -23,18 +25,26 @@ class LaucherActivity : AppCompatActivity() {
 
         var user = User(123, "Dieu", "Dep trai")
         userDB.newUser(user)
+        userDB.getAllUsers()
+
 
         var income = Income(123, "income name", "income date", "income type name", 123, 100)
         incomeDB.newIncome(income)
 
+
+
         var outcome = Outcome(123, "income name", "income date", "income type name", 123, 100)
         outcomeDB.newOutcome(outcome)
+
 
         var incomeType = IncomeType(123, "outcome type")
         incomeTypeDB.newIncomeType(incomeType)
 
+
+
         var outcomeType  = OutcomeType(123, "outcome type")
         outcomeTypeDB.newOutcomeType(outcomeType)
+
         //database created successfully, use Database Inspector to check
 
     }

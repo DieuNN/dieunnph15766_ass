@@ -24,7 +24,7 @@ public class UserDB implements UserDao {
     @Override
     public ArrayList<User> getAllUsers() {
         sqliteDatabase = db.getWritableDatabase();
-        Cursor cursor = sqliteDatabase.rawQuery("SELECT * FROM " + Database.TABLE_USER, null);
+        Cursor cursor = sqliteDatabase.rawQuery("SELECT * FROM " + Database.TABLE_USER , null);
 
         if(cursor.getCount()>0) {
             cursor.moveToFirst();

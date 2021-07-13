@@ -81,12 +81,12 @@ public class OutcomeDB implements OutcomeDao {
         values.put("USER_ID", outcome.getUserID());
         values.put("OUTCOME_AMOUNT", outcome.getOutcomeAmount());
 
-        return sqliteDatabase.update(Database.TABLE_OUTCOME, values, "outcomeID = ?", new String[] { outcome.getOutcomeID() +""}) > 0;
+        return sqliteDatabase.update(Database.TABLE_OUTCOME, values, "OUTCOME_ID = ?", new String[] { outcome.getOutcomeID() +""}) > 0;
     }
 
     @Override
     public boolean removeOutcome(@NotNull Outcome outcome) {
         sqliteDatabase = db.getWritableDatabase();
-        return sqliteDatabase.delete(Database.TABLE_OUTCOME, "outcomeID = ?", new String[] { outcome.getOutcomeID() + ""}) > 0;
+        return sqliteDatabase.delete(Database.TABLE_OUTCOME, "OUTCOME_ID = ?", new String[] { outcome.getOutcomeID() + ""}) > 0;
     }
 }

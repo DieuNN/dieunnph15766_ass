@@ -68,7 +68,7 @@ public class OutcomeTypeDB implements OutcomeTypeDao {
     public boolean removeOutcomeType(@NotNull OutcomeType outcome) {
         sqliteDatabase = db.getWritableDatabase();
 
-        return sqliteDatabase.delete(Database.TABLE_OUTCOME_TYPE, "outcomeID = ?", new String[]{outcome.getOutcomeTypeID() + ""}) > 0;
+        return sqliteDatabase.delete(Database.TABLE_OUTCOME_TYPE, "OUTCOME_TYPE_ID = ?", new String[]{outcome.getOutcomeTypeID() + ""}) > 0;
     }
 
     @Override
@@ -80,6 +80,6 @@ public class OutcomeTypeDB implements OutcomeTypeDao {
         values.put("OUTCOME_TYPE_ID", outcome.getOutcomeTypeID());
         values.put("OUTCOME_TYPE_NAME", outcome.getOutcomeTypeName());
 
-        return sqliteDatabase.update(Database.TABLE_OUTCOME_TYPE, values, "outcomeID = ?", new String[]{outcome.getOutcomeTypeID() + ""}) > 0;
+        return sqliteDatabase.update(Database.TABLE_OUTCOME_TYPE, values, "OUTCOME_TYPE_ID = ?", new String[]{outcome.getOutcomeTypeID() + ""}) > 0;
     }
 }
