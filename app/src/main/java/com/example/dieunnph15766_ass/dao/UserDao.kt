@@ -7,5 +7,7 @@ interface UserDao {
 
     fun getUser(index: Int): User
 
-    fun newUser(user:User): Boolean
+    fun newUser(user: User): Boolean
+
+    fun isUserExist(user: User): Boolean
 }

@@ -1,85 +1,64 @@
-package com.example.dieunnph15766_ass.database;
+package com.example.dieunnph15766_ass.database
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.ContentValues
+import android.database.sqlite.SQLiteDatabase
+import com.example.dieunnph15766_ass.dao.OutcomeTypeDao
+import com.example.dieunnph15766_ass.model.OutcomeType
+import java.util.*
 
-import com.example.dieunnph15766_ass.dao.OutcomeTypeDao;
-import com.example.dieunnph15766_ass.model.OutcomeType;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-
-public class OutcomeTypeDB implements OutcomeTypeDao {
-    private Database db;
-    private SQLiteDatabase sqliteDatabase;
-    private ArrayList<OutcomeType> list;
-
-    public OutcomeTypeDB(Database db) {
-        this.db = db;
-    }
-
-    @NotNull
-    @Override
-    public ArrayList<OutcomeType> getAllOutcomes() {
-        sqliteDatabase = db.getWritableDatabase();
-        Cursor cursor = sqliteDatabase.rawQuery("SELECT * FROM " + Database.TABLE_OUTCOME_TYPE, null);
-        list = new ArrayList<OutcomeType>();
-
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                OutcomeType outcomeType = new OutcomeType();
-                outcomeType.setOutcomeTypeID(cursor.getLong(0));
-                outcomeType.setOutcomeTypeName(cursor.getString(1));
-
-                list.add(outcomeType);
-
-                cursor.moveToNext();
+class OutcomeTypeDB(private val db: Database) : OutcomeTypeDao {
+    private var sqliteDatabase: SQLiteDatabase? = null
+    private var list: ArrayList<OutcomeType>? = null
+    override fun getAllOutcomes(): ArrayList<OutcomeType> {
+        sqliteDatabase = db.writableDatabase
+        val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM " + Database.TABLE_OUTCOME_TYPE, null)
+        list = ArrayList()
+        if (cursor.count > 0) {
+            cursor.moveToFirst()
+            while (!cursor.isAfterLast) {
+                val outcomeType = OutcomeType()
+                outcomeType.outcomeTypeID = cursor.getLong(0)
+                outcomeType.outcomeTypeName = cursor.getString(1)
+                list!!.add(outcomeType)
+                cursor.moveToNext()
             }
         }
-
-        cursor.close();
-        sqliteDatabase.close();
-
-        return list;
+        cursor.close()
+        sqliteDatabase!!.close()
+        return list!!
     }
 
-    @NotNull
-    @Override
-    public OutcomeType getOutcomeType(int index) {
-        return list.get(index);
+    override fun getOutcomeType(index: Int): OutcomeType {
+        return list!![index]
     }
 
-    @Override
-    public boolean newOutcomeType(@NotNull OutcomeType outcome) {
-        sqliteDatabase = db.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put("OUTCOME_TYPE_ID", outcome.getOutcomeTypeID());
-        values.put("OUTCOME_TYPE_NAME", outcome.getOutcomeTypeName());
-
-        return sqliteDatabase.insert(Database.TABLE_OUTCOME_TYPE, null, values) > 0;
+    override fun newOutcomeType(outcome: OutcomeType): Boolean {
+        sqliteDatabase = db.writableDatabase
+        val values = ContentValues()
+        values.put("OUTCOME_TYPE_ID", outcome.outcomeTypeID)
+        values.put("OUTCOME_TYPE_NAME", outcome.outcomeTypeName)
+        return sqliteDatabase!!.insert(Database.TABLE_OUTCOME_TYPE, null, values) > 0
     }
 
-    @Override
-    public boolean removeOutcomeType(@NotNull OutcomeType outcome) {
-        sqliteDatabase = db.getWritableDatabase();
-
-        return sqliteDatabase.delete(Database.TABLE_OUTCOME_TYPE, "OUTCOME_TYPE_ID = ?", new String[]{outcome.getOutcomeTypeID() + ""}) > 0;
+    override fun removeOutcomeType(outcome: OutcomeType): Boolean {
+        sqliteDatabase = db.writableDatabase
+        return sqliteDatabase!!.delete(
+            Database.TABLE_OUTCOME_TYPE,
+            "OUTCOME_TYPE_ID = ?",
+            arrayOf(outcome.outcomeTypeID.toString() + "")
+        ) > 0
     }
 
-    @Override
-    public boolean editOutcomeType(@NotNull OutcomeType outcome) {
-        sqliteDatabase = db.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put("OUTCOME_TYPE_ID", outcome.getOutcomeTypeID());
-        values.put("OUTCOME_TYPE_NAME", outcome.getOutcomeTypeName());
-
-        return sqliteDatabase.update(Database.TABLE_OUTCOME_TYPE, values, "OUTCOME_TYPE_ID = ?", new String[]{outcome.getOutcomeTypeID() + ""}) > 0;
+    override fun editOutcomeType(outcome: OutcomeType): Boolean {
+        sqliteDatabase = db.writableDatabase
+        val values = ContentValues()
+        values.put("OUTCOME_TYPE_ID", outcome.outcomeTypeID)
+        values.put("OUTCOME_TYPE_NAME", outcome.outcomeTypeName)
+        return sqliteDatabase!!.update(
+            Database.TABLE_OUTCOME_TYPE,
+            values,
+            "OUTCOME_TYPE_ID = ?",
+            arrayOf(outcome.outcomeTypeID.toString() + "")
+        ) > 0
     }
 }
