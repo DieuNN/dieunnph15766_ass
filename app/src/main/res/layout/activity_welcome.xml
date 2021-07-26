@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LauncherActivity"
-    android:fitsSystemWindows="true"
+    tools:context=".activity.WelcomeActivity"
+    android:orientation="vertical"
     android:gravity="center"
-    android:orientation="vertical">
+    android:background="@color/dark_green">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/launcher_icon"/>
+        android:src="@drawable/launcher_icon" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,6 +20,5 @@
         android:layout_marginTop="8dp"
         android:text="@string/app_name"
         android:textSize="18pt" />
-
 
 </LinearLayout>
