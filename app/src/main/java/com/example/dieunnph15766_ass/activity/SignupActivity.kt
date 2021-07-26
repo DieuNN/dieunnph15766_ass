@@ -4,12 +4,19 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.dieunnph15766_ass.R
+import com.example.dieunnph15766_ass.database.Database
+import com.example.dieunnph15766_ass.database.UserDB
+import com.example.dieunnph15766_ass.model.User
 import kotlinx.android.synthetic.main.activity_signup.*
+import kotlin.coroutines.coroutineContext
 
 class SignupActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -22,6 +29,9 @@ class SignupActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = ""
+
+        val database = Database(this)
+        val userDB = UserDB(database)
 
         button_signup.setOnClickListener {
             if (edit_text_signup_username.text.toString().isEmpty()) {
@@ -39,7 +49,15 @@ class SignupActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
+            if(userDB.newUser(User(null, edit_text_signup_username.text.toString(), edit_text_signup_password.text.toString()))) {
+                Toast.makeText(this, "Đăng ký thành công! Mời bạn đăng nhập để sử dụng ứng dụng!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.putExtra("username", edit_text_signup_username.text.toString())
+                intent.putExtra("password", edit_text_signup_password.text.toString())
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Tên ngưòi dùng đã được đặt truớc! Xin hãy chọn tên nguời dùng khác!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         text_view_login.setOnClickListener {

@@ -10,4 +10,5 @@ interface UserDao {
     fun newUser(user: User): Boolean
 
     fun isUserExist(user: User): Boolean
+
 }

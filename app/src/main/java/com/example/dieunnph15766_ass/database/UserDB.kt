@@ -44,6 +44,8 @@ class UserDB(private val db: Database) : UserDao {
 
     override fun isUserExist(user: User): Boolean {
         sqliteDatabase = db.writableDatabase
-        return false
+       val cursor = sqliteDatabase!!.rawQuery("SELECT COUNT(*) FROM ${Database.TABLE_USER} WHERE USERNAME = \"${user.username}\" AND PASSWORD = \"${user.password}\" ", null)
+        cursor.moveToFirst()
+        return cursor.getInt(0) == 1
     }
 }

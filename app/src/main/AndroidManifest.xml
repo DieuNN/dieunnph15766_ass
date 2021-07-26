@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyLover">
+        <activity android:name=".activity.HomeActivity"></activity>
         <activity
             android:name=".activity.LoginActivity"
             android:parentActivityName=".activity.WelcomeActivity" />
         <activity
             android:name=".activity.SignupActivity"
             android:parentActivityName=".activity.WelcomeActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|adjustResize|stateHidden" />
         <activity
             android:name=".activity.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
