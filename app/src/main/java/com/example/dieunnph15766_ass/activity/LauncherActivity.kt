@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dieunnph15766_ass.R
 import com.example.dieunnph15766_ass.database.*
@@ -19,7 +18,7 @@ class LauncherActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_launcher)
 
         // After 3s, open WelcomeActivity
         Handler(Looper.getMainLooper()).postDelayed({

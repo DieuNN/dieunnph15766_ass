@@ -21,7 +21,7 @@ class IncomeDB(private val db: Database) : IncomeDao {
                 income.incomeName = cursor.getString(1)
                 income.incomeDate = cursor.getString(2)
                 income.incomeTypeName = cursor.getString(3)
-                income.userID = cursor.getLong(4)
+                income.userName = cursor.getString(4)
                 income.incomeAmount = cursor.getLong(5)
                 list!!.add(income)
                 cursor.moveToNext()
@@ -43,7 +43,7 @@ class IncomeDB(private val db: Database) : IncomeDao {
         values.put("INCOME_NAME", income.incomeName)
         values.put("INCOME_DATE", income.incomeDate)
         values.put("INCOME_TYPE_NAME", income.incomeTypeName)
-        values.put("USER_ID", income.userID)
+        values.put("USER_ID", income.userName)
         values.put("INCOME_AMOUNT", income.incomeAmount)
         return sqliteDatabase!!.insert(Database.TABLE_INCOME, null, values) > 0
     }
@@ -55,7 +55,7 @@ class IncomeDB(private val db: Database) : IncomeDao {
         values.put("INCOME_NAME", income.incomeName)
         values.put("INCOME_DATE", income.incomeDate)
         values.put("INCOME_TYPE_NAME", income.incomeTypeName)
-        values.put("USER_ID", income.userID)
+        values.put("USER_ID", income.userName)
         values.put("INCOME_AMOUNT", income.incomeAmount)
         return sqliteDatabase!!.update(
             Database.TABLE_INCOME,

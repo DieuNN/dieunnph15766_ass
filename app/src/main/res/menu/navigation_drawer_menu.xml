@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group
+        android:id="@+id/first_navigation_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_income"
+            android:title="@string/income"
+            android:icon="@drawable/outline_account_balance_wallet_24"/>
+        <item android:id="@+id/menu_outcome"
+            android:title="@string/outcome"
+            android:icon="@drawable/outline_shopping_cart_24"/>
+        <item android:id="@+id/menu_chart"
+            android:title="@string/chart"
+            android:icon="@drawable/outline_analytics_24"/>
+    </group>
+
+    <group
+        android:id="@+id/second_navigation_group"
+        android:checkableBehavior="single" >
+
+        <item android:id="@+id/menu_information"
+            android:title="@string/information"
+            android:icon="@drawable/outline_code_24"/>
+        <item android:id="@+id/menu_exit"
+            android:title="@string/exit"
+            android:icon="@drawable/outline_logout_20"/>
+    </group>
+</menu>

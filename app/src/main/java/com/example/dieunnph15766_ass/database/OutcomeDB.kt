@@ -19,7 +19,7 @@ class OutcomeDB(private val db: Database) : OutcomeDao {
                 outcome.outcomeName = cursor.getString(1)
                 outcome.outcomeDate = cursor.getString(2)
                 outcome.outcomeTypeName = cursor.getString(3)
-                outcome.userID = cursor.getLong(4)
+                outcome.userName = cursor.getString(4)
                 outcome.outcomeAmount = cursor.getLong(5)
                 list!!.add(outcome)
                 cursor.moveToNext()
@@ -41,7 +41,7 @@ class OutcomeDB(private val db: Database) : OutcomeDao {
         values.put("OUTCOME_NAME", outcome.outcomeName)
         values.put("OUTCOME_DATE", outcome.outcomeDate)
         values.put("OUTCOME_TYPE_NAME", outcome.outcomeTypeName)
-        values.put("USER_ID", outcome.userID)
+        values.put("USER_ID", outcome.userName)
         values.put("OUTCOME_AMOUNT", outcome.outcomeAmount)
         return sqliteDatabase!!.insert(Database.TABLE_OUTCOME, null, values) > 0
     }
@@ -53,7 +53,7 @@ class OutcomeDB(private val db: Database) : OutcomeDao {
         values.put("OUTCOME_NAME", outcome.outcomeName)
         values.put("OUTCOME_DATE", outcome.outcomeDate)
         values.put("OUTCOME_TYPE_NAME", outcome.outcomeTypeName)
-        values.put("USER_ID", outcome.userID)
+        values.put("USER_ID", outcome.userName)
         values.put("OUTCOME_AMOUNT", outcome.outcomeAmount)
         return sqliteDatabase!!.update(
             Database.TABLE_OUTCOME,

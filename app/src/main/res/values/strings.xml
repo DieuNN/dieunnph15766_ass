@@ -14,4 +14,16 @@ của riêng bạn, giúp bạn đạt mục tiêu tiết kiệm nhanh nhất</s
     <string name="re_password">Nhập lại mật khẩu</string>
     <string name="or">Họăc</string>
     <string name="null_username">Bạn chưa nhập tên nguời dùng!</string>
+    <string name="income">Khoản thu</string>
+    <string name="outcome">Khoản chi</string>
+    <string name="chart">Thống kê</string>
+    <string name="information">Giới thiệu</string>
+    <string name="exit">Thoát</string>
+    <string name="open_drawer">Open Drawer</string>
+
+    <string name="remember_information">Ghi nhớ thông tin?</string>
+    <string name="close_drawer">Close Drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

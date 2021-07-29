@@ -5,7 +5,7 @@ class Outcome {
     var outcomeName:String? = null
     var outcomeDate:String? = null
     var outcomeTypeName:String? = null
-    var userID:Long? = null
+    var userName:String? = null
     var outcomeAmount:Long? = null
 
     constructor(
@@ -13,14 +13,14 @@ class Outcome {
         outcomeName: String?,
         outcomeDate: String?,
         incomeTypeName: String?,
-        userID: Long?,
+        userName: String?,
         outcomeAmount: Long?
     ) {
         this.outcomeID = outcomeID
         this.outcomeName = outcomeName
         this.outcomeDate = outcomeDate
         this.outcomeTypeName = incomeTypeName
-        this.userID = userID
+        this.userName = userName
         this.outcomeAmount = outcomeAmount
     }
 

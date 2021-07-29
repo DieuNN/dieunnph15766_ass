@@ -58,12 +58,34 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:inputType="textPassword"
                 android:id="@+id/edit_text_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remember_information"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:layout_marginStart="8dp"
+                android:id="@+id/checkbox_login_remember_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/button_login"

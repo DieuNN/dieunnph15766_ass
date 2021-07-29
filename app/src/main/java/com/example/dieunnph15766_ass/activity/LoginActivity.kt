@@ -2,11 +2,11 @@ package com.example.dieunnph15766_ass.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.dieunnph15766_ass.R
@@ -25,11 +25,33 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // Use sharedPreferences to storage information
+        val globalSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val localSharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+
+        if (localSharedPreferences.getBoolean("REMEMBER", false)) {
+            checkbox_login_remember_info.isChecked = true
+            edit_text_login_username.setText(
+                localSharedPreferences.getString(
+                    "USERNAME",
+                    ""
+                )
+            )
+            edit_text_login_password.setText(
+                localSharedPreferences.getString(
+                    "PASSWORD",
+                    ""
+                )
+            )
+        }
+
+
         // Transparent navigation bar and status bar
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
+
 
         // Set support action bar, set navigation button behavior, set title
         setSupportActionBar(toolbar_login)
@@ -38,8 +60,10 @@ class LoginActivity : AppCompatActivity() {
         title = ""
 
         // Get username and password from SignupActivity if new user has been created
-        edit_text_login_username.setText(intent.getStringExtra("username"))
-        edit_text_login_password.setText(intent.getStringExtra("password"))
+        if (intent.getStringExtra("username") != null) {
+            edit_text_login_username.setText(intent.getStringExtra("username"))
+            edit_text_login_password.setText(intent.getStringExtra("password"))
+        }
 
         //Validating username and password
         button_login.setOnClickListener {
@@ -54,15 +78,33 @@ class LoginActivity : AppCompatActivity() {
             }
 
             // Checking whether user existed or not
-            if (userDB.isUserExist(User(null, edit_text_login_username.text.toString(), edit_text_login_password.text.toString()))) {
+            if (userDB.isUserExist(
+                    User(
+                        null,
+                        edit_text_login_username.text.toString(),
+                        edit_text_login_password.text.toString()
+                    )
+                )
+            ) {
                 //If existed, then open MainActivity
                 Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
 
                 // Use sharedPreferences to storage username
-                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-                sharedPreferences.edit()
+
+                globalSharedPreferences.edit()
                     .putString("USERNAME", edit_text_login_username.text.toString())
                     .apply()
+
+                localSharedPreferences.edit()
+                    .putString("USERNAME", edit_text_login_username.text.toString())
+                    .putString("PASSWORD", edit_text_login_password.text.toString())
+                    .putBoolean("REMEMBER", checkbox_login_remember_info.isChecked)
+                    .apply()
+
+                startActivity(Intent(this, MainActivity::class.java))
+
+                // Clear all back stack activities
+                finishAffinity()
 
             }
             // If user does not exist, then notify that user hasn't been created yet
@@ -75,6 +117,7 @@ class LoginActivity : AppCompatActivity() {
         text_view_signup.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }
+
 
     }
 }
