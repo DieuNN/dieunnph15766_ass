@@ -13,15 +13,15 @@ class Database(context: Context?) :
         val createTableIncomeType =
             "CREATE TABLE $TABLE_INCOME_TYPE(INCOME_TYPE_ID INTEGER PRIMARY KEY AUTOINCREMENT , INCOME_TYPE_NAME TEXT, USERNAME TEXT)"
         db.execSQL(createTableIncomeType)
-        val createTableOutcomeType =
-            "CREATE TABLE $TABLE_OUTCOME_TYPE(OUTCOME_TYPE_ID INTEGER PRIMARY KEY AUTOINCREMENT , OUTCOME_TYPE_NAME TEXT, USERNAME TEXT)"
-        db.execSQL(createTableOutcomeType)
+        val createTableEXPENSEType =
+            "CREATE TABLE $TABLE_EXPENSE_TYPE(EXPENSE_TYPE_ID INTEGER PRIMARY KEY AUTOINCREMENT , EXPENSE_TYPE_NAME TEXT, USERNAME TEXT)"
+        db.execSQL(createTableEXPENSEType)
         val createTableIncome =
             "CREATE TABLE $TABLE_INCOME(INCOME_ID INTEGER PRIMARY KEY AUTOINCREMENT , INCOME_NAME TEXT, INCOME_DATE TEXT, INCOME_TYPE_NAME TEXT, INCOME_TYPE_ID INTEGER ,  USERNAME TEXT, INCOME_AMOUNT REAL)"
         db.execSQL(createTableIncome)
-        val createTableOutcome =
-            "CREATE TABLE $TABLE_OUTCOME(OUTCOME_ID INTEGER PRIMARY KEY AUTOINCREMENT , OUTCOME_NAME TEXT, OUTCOME_DATE TEXT, OUTCOME_TYPE_NAME TEXT,INCOME_TYPE_ID INTEGER , USERNAME TEXT, OUTCOME_AMOUNT REAL)"
-        db.execSQL(createTableOutcome)
+        val createTableEXPENSE =
+            "CREATE TABLE $TABLE_EXPENSE(EXPENSE_ID INTEGER PRIMARY KEY AUTOINCREMENT , EXPENSE_NAME TEXT, EXPENSE_DATE TEXT, EXPENSE_TYPE_NAME TEXT,INCOME_TYPE_ID INTEGER , USERNAME TEXT, EXPENSE_AMOUNT REAL)"
+        db.execSQL(createTableEXPENSE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
@@ -32,8 +32,8 @@ class Database(context: Context?) :
         const val TABLE_USER = "USER"
         const val TABLE_INCOME_TYPE = "INCOME_TYPE"
         const val TABLE_INCOME = "INCOME"
-        const val TABLE_OUTCOME_TYPE = "OUTCOME_TYPE"
-        const val TABLE_OUTCOME = "OUTCOME"
+        const val TABLE_EXPENSE_TYPE = "EXPENSE_TYPE"
+        const val TABLE_EXPENSE = "EXPENSE"
         const val DATABASE_VERSION = 1
     }
 }

@@ -12,10 +12,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import com.example.dieunnph15766_ass.R
-import com.example.dieunnph15766_ass.fragment.ChartFragment
-import com.example.dieunnph15766_ass.fragment.IncomeFragment
-import com.example.dieunnph15766_ass.fragment.InformationFragment
-import com.example.dieunnph15766_ass.fragment.OutcomeFragment
+import com.example.dieunnph15766_ass.fragment.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.*
@@ -36,7 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Get username from sharedPreferences and set text for header navigation view
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val username:String? = sharedPreferences.getString("USERNAME", "")
+        val username: String? = sharedPreferences.getString("USERNAME", "")
         navigation_view.getHeaderView(0).textview_username_nav_header.text = username
 
         setSupportActionBar(toolbar)
@@ -44,20 +41,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayShowHomeEnabled(true)
         toolbar.setNavigationIcon(R.drawable.ic_baseline_menu_24)
 
-        val toggle = ActionBarDrawerToggle(this, drawerlayout, toolbar, R.string.open_drawer, R.string.close_drawer)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerlayout,
+            toolbar,
+            R.string.open_drawer,
+            R.string.close_drawer
+        )
         drawerlayout.addDrawerListener(toggle)
         toggle.syncState()
 
         navigation_view.setNavigationItemSelectedListener(this)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().replace(R.id.frame_layout, ChartFragment()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.frame_layout, ChartFragment())
+                .commit()
             navigation_view.setCheckedItem(R.id.menu_chart)
         }
     }
 
     override fun onBackPressed() {
-        if(drawerlayout.isDrawerOpen(GravityCompat.START)) {
+        if (drawerlayout.isDrawerOpen(GravityCompat.START)) {
             drawerlayout.closeDrawer(GravityCompat.START)
         }
         super.onBackPressed()
@@ -65,19 +69,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_income -> supportFragmentManager.beginTransaction().replace(R.id.frame_layout, IncomeFragment()).commit()
-            R.id.menu_outcome -> supportFragmentManager.beginTransaction().replace(R.id.frame_layout, OutcomeFragment()).commit()
-            R.id.menu_chart -> supportFragmentManager.beginTransaction().replace(R.id.frame_layout, ChartFragment()).commit()
-            R.id.menu_information -> supportFragmentManager.beginTransaction().replace(R.id.frame_layout, InformationFragment()).commit()
+            R.id.menu_income -> supportFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, IncomeFragmentContainer()).commit()
+            R.id.menu_outcome -> supportFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, ExpenseFragmentContainer()).commit()
+            R.id.menu_chart -> supportFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, ChartFragment()).commit()
+            R.id.menu_information -> supportFragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, InformationFragment()).commit()
             else -> AlertDialog.Builder(this)
                 .setTitle("Thông báo")
                 .setMessage("Bạn chắc chắn muốn thoát?")
-                .setNegativeButton("Không", DialogInterface.OnClickListener { dialogInterface, i -> let {
-                    dialogInterface.dismiss()
-                } })
-                .setPositiveButton("Thoát", DialogInterface.OnClickListener { dialogInterface, i -> let {
-                    exitProcess(0)
-                } })
+                .setNegativeButton(
+                    "Không",
+                    DialogInterface.OnClickListener { dialogInterface, _ -> let { dialogInterface.dismiss() } })
+                .setPositiveButton(
+                    "Thoát",
+                    DialogInterface.OnClickListener { _, _ -> exitProcess(0) })
                 .create()
                 .show()
         }

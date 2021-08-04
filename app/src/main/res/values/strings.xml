@@ -16,6 +16,8 @@ của riêng bạn, giúp bạn đạt mục tiêu tiết kiệm nhanh nhất</s
     <string name="null_username">Bạn chưa nhập tên nguời dùng!</string>
     <string name="income">Khoản thu</string>
     <string name="outcome">Khoản chi</string>
+    <string name="income_type">Loại khoản thu</string>
+    <string name="outcome_type">Loại khoản chi</string>
     <string name="chart">Thống kê</string>
     <string name="information">Giới thiệu</string>
     <string name="exit">Thoát</string>
@@ -25,5 +27,10 @@ của riêng bạn, giúp bạn đạt mục tiêu tiết kiệm nhanh nhất</s
     <string name="close_drawer">Close Drawer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="add_income_type">Thêm loại khoản thu mới</string>
+    <string name="cancel">Huỷ</string>
+    <string name="add">Thêm</string>
+    <string name="cannot_be_empty">Không đuợc để trống!</string>
 
 </resources>

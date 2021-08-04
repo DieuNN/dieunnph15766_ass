@@ -19,6 +19,7 @@ class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
                 val incomeType = IncomeType()
                 incomeType.incomeTypeID = cursor.getLong(0)
                 incomeType.incomeTypeName = cursor.getString(1)
+                incomeType.userName = cursor.getString(2)
                 list!!.add(incomeType)
                 cursor.moveToNext()
             }
@@ -37,11 +38,12 @@ class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
         val values = ContentValues()
         values.put("INCOME_TYPE_ID", incomeType.incomeTypeID)
         values.put("INCOME_TYPE_NAME", incomeType.incomeTypeName)
+        values.put("USERNAME", incomeType.userName)
         return sqliteDatabase!!.update(
             Database.TABLE_INCOME_TYPE,
             values,
-            "INCOME_TYPE_ID = ?",
-            arrayOf(incomeType.incomeTypeID.toString() + "")
+            "INCOME_TYPE_NAME = ?",
+            arrayOf(incomeType.incomeTypeName.toString() + "")
         ) > 0
     }
 
@@ -49,8 +51,8 @@ class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
         sqliteDatabase = db.writableDatabase
         return sqliteDatabase!!.delete(
             Database.TABLE_INCOME_TYPE,
-            "INCOME_TYPE_ID = ?",
-            arrayOf(incomeType.incomeTypeID.toString() + "")
+            "INCOME_TYPE_NAME = ?",
+            arrayOf(incomeType.incomeTypeName.toString() + "")
         ) > 0
     }
 
@@ -59,6 +61,7 @@ class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
         val values = ContentValues()
         values.put("INCOME_TYPE_ID", incomeType.incomeTypeID)
         values.put("INCOME_TYPE_NAME", incomeType.incomeTypeName)
+        values.put("USERNAME", incomeType.userName)
         return sqliteDatabase!!.insert(Database.TABLE_INCOME_TYPE, null, values) > 0
     }
 }

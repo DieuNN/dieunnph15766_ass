@@ -3,19 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.IncomeFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.IncomeFragmentContainer"
     android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_income_controller"
+        android:id="@+id/tablayout_income_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/dark_green"
+        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/orange"/>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager2_income"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager_income_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-
 
 </LinearLayout>

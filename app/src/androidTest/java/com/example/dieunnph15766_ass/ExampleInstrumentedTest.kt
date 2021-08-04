@@ -1,7 +1,12 @@
 package com.example.dieunnph15766_ass
 
+import android.app.Activity
+import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.dieunnph15766_ass.database.Database
+import com.example.dieunnph15766_ass.database.IncomeTypeDB
+import com.example.dieunnph15766_ass.model.IncomeType
 
 import org.junit.Test
 import org.junit.runner.RunWith
