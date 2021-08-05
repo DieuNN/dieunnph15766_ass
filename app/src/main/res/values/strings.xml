@@ -32,5 +32,14 @@ của riêng bạn, giúp bạn đạt mục tiêu tiết kiệm nhanh nhất</s
     <string name="cancel">Huỷ</string>
     <string name="add">Thêm</string>
     <string name="cannot_be_empty">Không đuợc để trống!</string>
+    <string name="save">Lưu</string>
+    <string name="income_name">Tên khoản thu</string>
+    <string name="note">Ghi chú</string>
+    <string name="income_date">Ngày thu</string>
+    <string name="add_income">Thêm khoản thu mới</string>
+    <string name="didnot_choose">Bạn chưa chọn  lựa chọn nào</string>
+    <string name="amount">Số luợng</string>
+    <string name="successfully">Thành công!</string>
+    <string name="failed">Thất bại!</string>
 
 </resources>

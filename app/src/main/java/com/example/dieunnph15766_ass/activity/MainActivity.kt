@@ -12,7 +12,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import com.example.dieunnph15766_ass.R
+import com.example.dieunnph15766_ass.database.Database
+import com.example.dieunnph15766_ass.database.IncomeTypeDB
 import com.example.dieunnph15766_ass.fragment.*
+import com.example.dieunnph15766_ass.model.IncomeType
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.*
@@ -22,7 +25,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // Set status bar color
         window.apply {
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)

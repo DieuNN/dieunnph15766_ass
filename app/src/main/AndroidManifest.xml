@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyLover">
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity
+            android:name=".activity.NewIncome"
+            android:exported="true"
+            android:parentActivityName=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:parentActivityName=".activity.WelcomeActivity" />
