@@ -1,12 +1,12 @@
-package com.example.dieunnph15766_ass.dao
+package com.example.dieunnph15766_ass.dao.expense
 
-import com.example.dieunnph15766_ass.model.Expense
+import com.example.dieunnph15766_ass.model.expense.Expense
 
 interface ExpenseDAO {
 
     fun getAllExpense(): ArrayList<Expense>
 
-    fun getExpense(index: Int):Expense
+    fun getExpense(index: Int): Expense
 
     fun newExpense(expense: Expense):Boolean
 

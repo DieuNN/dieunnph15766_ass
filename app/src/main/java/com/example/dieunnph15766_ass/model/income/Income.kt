@@ -1,4 +1,4 @@
-package com.example.dieunnph15766_ass.model
+package com.example.dieunnph15766_ass.model.income
 
 class Income {
     var incomeID:Long? = null

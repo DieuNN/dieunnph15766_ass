@@ -1,9 +1,10 @@
-package com.example.dieunnph15766_ass.database
+package com.example.dieunnph15766_ass.database.user
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import com.example.dieunnph15766_ass.dao.UserDao
-import com.example.dieunnph15766_ass.model.User
+import com.example.dieunnph15766_ass.dao.user.UserDao
+import com.example.dieunnph15766_ass.database.Database
+import com.example.dieunnph15766_ass.model.user.User
 import java.util.*
 
 class UserDB(private val db: Database) : UserDao {

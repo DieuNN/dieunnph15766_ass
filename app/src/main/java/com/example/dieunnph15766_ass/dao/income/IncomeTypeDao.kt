@@ -1,11 +1,11 @@
-package com.example.dieunnph15766_ass.dao
+package com.example.dieunnph15766_ass.dao.income
 
-import com.example.dieunnph15766_ass.model.IncomeType
+import com.example.dieunnph15766_ass.model.income.IncomeType
 
 interface IncomeTypeDao {
     fun getAllIncomeType():ArrayList<IncomeType>
 
-    fun getIncomeType(index:Int):IncomeType
+    fun getIncomeType(index:Int): IncomeType
 
     fun editIncomeType(incomeType: IncomeType):Boolean
 

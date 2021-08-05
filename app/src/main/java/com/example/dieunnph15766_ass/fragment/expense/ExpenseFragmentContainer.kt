@@ -1,4 +1,4 @@
-package com.example.dieunnph15766_ass.fragment
+package com.example.dieunnph15766_ass.fragment.expense
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -21,8 +21,8 @@ class ExpenseFragmentContainer : Fragment() {
         val adapter = ContainerFragmentAdapter(childFragmentManager)
 
         tabLayout.setupWithViewPager(viewPager)
-        adapter.addFragment(OutcomeFragment(), resources.getString(R.string.outcome))
-        adapter.addFragment(OutcomeTypeFragment(), resources.getString(R.string.outcome_type))
+        adapter.addFragment(ExpenseFragment(), resources.getString(R.string.outcome))
+        adapter.addFragment(ExpenseTypeFragment(), resources.getString(R.string.outcome_type))
 
         viewPager.adapter = adapter
 

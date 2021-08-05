@@ -1,4 +1,4 @@
-package com.example.dieunnph15766_ass.fragment
+package com.example.dieunnph15766_ass.fragment.income
 
 import android.content.Intent
 import android.view.LayoutInflater

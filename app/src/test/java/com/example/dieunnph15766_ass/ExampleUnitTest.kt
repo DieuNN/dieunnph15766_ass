@@ -3,7 +3,6 @@ package com.example.dieunnph15766_ass
 import org.junit.Test
 
 import org.junit.Assert.*
-import com.example.dieunnph15766_ass.database.UserDB
 
 /**
  * Example local unit test, which will execute on the development machine (host).

@@ -1,10 +1,12 @@
-package com.example.dieunnph15766_ass.database
+package com.example.dieunnph15766_ass.database.expense
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import com.example.dieunnph15766_ass.dao.ExpenseDAO
-import com.example.dieunnph15766_ass.model.Expense
+import com.example.dieunnph15766_ass.dao.expense.ExpenseDAO
+import com.example.dieunnph15766_ass.database.Database
+import com.example.dieunnph15766_ass.model.expense.Expense
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ExpenseDB(private val db: Database) : ExpenseDAO {
     private var sqliteDatabase: SQLiteDatabase? = null
@@ -41,7 +43,7 @@ class ExpenseDB(private val db: Database) : ExpenseDAO {
         values.put("EXPENSE_NAME", expense.expenseName)
         values.put("EXPENSE_DATE", expense.expenseDate)
         values.put("EXPENSE_TYPE_NAME", expense.expenseTypeName)
-        values.put("USER_ID", expense.userName)
+        values.put("USERNAME", expense.userName)
         values.put("EXPENSE_AMOUNT", expense.expenseAmount)
         return sqliteDatabase!!.insert(Database.TABLE_EXPENSE, null, values) > 0
     }

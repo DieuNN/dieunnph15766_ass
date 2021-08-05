@@ -1,6 +1,5 @@
-package com.example.dieunnph15766_ass.fragment
+package com.example.dieunnph15766_ass.fragment.income
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.os.Bundle
@@ -9,16 +8,14 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentResultListener
 import com.example.dieunnph15766_ass.R
-import com.example.dieunnph15766_ass.activity.MainActivity
 import com.example.dieunnph15766_ass.database.Database
-import com.example.dieunnph15766_ass.database.IncomeTypeDB
+import com.example.dieunnph15766_ass.database.income.IncomeTypeDB
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.example.dieunnph15766_ass.dialog.CustomDialog
-import com.example.dieunnph15766_ass.model.IncomeType
+import com.example.dieunnph15766_ass.dialog.CustomDialogNewIncomeType
+import com.example.dieunnph15766_ass.model.income.IncomeType
 
-class IncomeTypeFragment : Fragment(), CustomDialog.OnInputSelected {
+class IncomeTypeFragment : Fragment(), CustomDialogNewIncomeType.OnInputSelected {
     lateinit var textResult: TextView
 
     override fun onCreateView(
@@ -38,7 +35,7 @@ class IncomeTypeFragment : Fragment(), CustomDialog.OnInputSelected {
         val fab =
             view.findViewById<View>(R.id.floating_action_button_add_new_income_type) as FloatingActionButton
         fab.setOnClickListener {
-            var dialog = CustomDialog()
+            var dialog = CustomDialogNewIncomeType()
             dialog.setTargetFragment(this, 0)
             dialog.show(parentFragmentManager, "Tag")
         }

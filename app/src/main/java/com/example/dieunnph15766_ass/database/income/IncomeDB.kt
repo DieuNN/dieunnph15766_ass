@@ -1,9 +1,10 @@
-package com.example.dieunnph15766_ass.database
+package com.example.dieunnph15766_ass.database.income
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import com.example.dieunnph15766_ass.dao.IncomeDao
-import com.example.dieunnph15766_ass.model.Income
+import com.example.dieunnph15766_ass.dao.income.IncomeDao
+import com.example.dieunnph15766_ass.database.Database
+import com.example.dieunnph15766_ass.model.income.Income
 import java.util.*
 
 class IncomeDB(private val db: Database) : IncomeDao {

@@ -1,10 +1,11 @@
-package com.example.dieunnph15766_ass.database
+package com.example.dieunnph15766_ass.database.income
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import com.example.dieunnph15766_ass.dao.IncomeTypeDao
-import com.example.dieunnph15766_ass.model.IncomeType
-import java.util.*
+import com.example.dieunnph15766_ass.dao.income.IncomeTypeDao
+import com.example.dieunnph15766_ass.database.Database
+import com.example.dieunnph15766_ass.model.income.IncomeType
+import kotlin.collections.ArrayList
 
 class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
     private var sqliteDatabase: SQLiteDatabase? = null

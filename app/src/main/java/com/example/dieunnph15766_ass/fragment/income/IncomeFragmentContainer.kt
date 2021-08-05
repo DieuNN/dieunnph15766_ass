@@ -1,4 +1,4 @@
-package com.example.dieunnph15766_ass.fragment
+package com.example.dieunnph15766_ass.fragment.income
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.dieunnph15766_ass.R
 import com.example.dieunnph15766_ass.adapter.ContainerFragmentAdapter
-import com.example.dieunnph15766_ass.database.Database
-import com.example.dieunnph15766_ass.database.IncomeTypeDB
-import com.example.dieunnph15766_ass.model.IncomeType
 import com.google.android.material.tabs.TabLayout
 
 class IncomeFragmentContainer : Fragment() {

@@ -1,12 +1,13 @@
-package com.example.dieunnph15766_ass.database
+package com.example.dieunnph15766_ass.database.expense
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import com.example.dieunnph15766_ass.dao.ExpenseTypeDAO
-import com.example.dieunnph15766_ass.model.ExpenseType
+import com.example.dieunnph15766_ass.dao.expense.ExpenseTypeDAO
+import com.example.dieunnph15766_ass.database.Database
+import com.example.dieunnph15766_ass.model.expense.ExpenseType
 import java.util.*
 
-class ExpensiveTypeDB(private val db: Database) : ExpenseTypeDAO {
+class ExpenseTypeDB(private val db: Database) : ExpenseTypeDAO {
     private var sqliteDatabase: SQLiteDatabase? = null
     private var list: ArrayList<ExpenseType>? = null
     override fun getAllExpense(): ArrayList<ExpenseType> {
@@ -19,6 +20,7 @@ class ExpensiveTypeDB(private val db: Database) : ExpenseTypeDAO {
                 val expenseType = ExpenseType()
                 expenseType.expenseID = cursor.getLong(0)
                 expenseType.expenseName = cursor.getString(1)
+                expenseType.username = cursor.getString(2)
                 list!!.add(expenseType)
                 cursor.moveToNext()
             }
@@ -35,8 +37,9 @@ class ExpensiveTypeDB(private val db: Database) : ExpenseTypeDAO {
     override fun newExpenseType(expense: ExpenseType): Boolean {
         sqliteDatabase = db.writableDatabase
         val values = ContentValues()
-        values.put("OUTCOME_TYPE_ID", expense.expenseID)
-        values.put("OUTCOME_TYPE_NAME", expense.expenseName)
+        values.put("EXPENSE_TYPE_ID", expense.expenseID)
+        values.put("EXPENSE_TYPE_NAME", expense.expenseName)
+        values.put("USERNAME", expense.username)
         return sqliteDatabase!!.insert(Database.TABLE_EXPENSE_TYPE, null, values) > 0
     }
 

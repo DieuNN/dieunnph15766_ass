@@ -1,18 +1,15 @@
 package com.example.dieunnph15766_ass.activity
 
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.dieunnph15766_ass.R
 import com.example.dieunnph15766_ass.database.Database
-import com.example.dieunnph15766_ass.database.UserDB
-import com.example.dieunnph15766_ass.model.User
+import com.example.dieunnph15766_ass.database.user.UserDB
+import com.example.dieunnph15766_ass.model.user.User
 import kotlinx.android.synthetic.main.activity_signup.*
-import kotlin.coroutines.coroutineContext
 
 class SignupActivity : AppCompatActivity() {
 

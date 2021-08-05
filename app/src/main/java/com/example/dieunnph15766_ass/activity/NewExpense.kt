@@ -11,15 +11,20 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.dieunnph15766_ass.R
 import com.example.dieunnph15766_ass.database.Database
+import com.example.dieunnph15766_ass.database.expense.ExpenseDB
+import com.example.dieunnph15766_ass.database.expense.ExpenseTypeDB
 import com.example.dieunnph15766_ass.database.income.IncomeDB
 import com.example.dieunnph15766_ass.database.income.IncomeTypeDB
+import com.example.dieunnph15766_ass.model.expense.Expense
+import com.example.dieunnph15766_ass.model.expense.ExpenseType
 import com.example.dieunnph15766_ass.model.income.Income
 import com.example.dieunnph15766_ass.model.income.IncomeType
+import kotlinx.android.synthetic.main.activity_new_expense.*
 import kotlinx.android.synthetic.main.activity_new_income.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NewIncome : AppCompatActivity() {
+class NewExpense : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,27 +34,26 @@ class NewIncome : AppCompatActivity() {
             statusBarColor = resources.getColor(R.color.dark_green)
         }
 
-        setContentView(R.layout.activity_new_income)
+        setContentView(R.layout.activity_new_expense)
 
-        setSupportActionBar(toolbar_new_income)
+        setSupportActionBar(toolbar_new_expense)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar_new_income.setNavigationIcon(R.drawable.outline_close_24)
-        title = resources.getString(R.string.add_income)
+        toolbar_new_expense.setNavigationIcon(R.drawable.outline_close_24)
+        title = resources.getString(R.string.add_expense)
 
         // Set on end icon of text field listener
         setEndIconClickListener()
 
         // Get data from Income Type
         val database = Database(this)
-        var incomeTypeDB = IncomeTypeDB(database)
-        var listIncomeType = ArrayList<IncomeType>()
-        listIncomeType = incomeTypeDB.getAllIncomeType()
+        var expenseTypeDB = ExpenseTypeDB(database)
+        var listExpenseType: ArrayList<ExpenseType> = expenseTypeDB.getAllExpense()
 
         var listData = ArrayList<String>()
 
-        for (element in listIncomeType) {
-            element.incomeTypeName?.let { listData.add(it) }
+        for (element in listExpenseType) {
+            element.expenseName?.let { listData.add(it) }
         }
 
         if(listData.size == 0) {
@@ -62,23 +66,23 @@ class NewIncome : AppCompatActivity() {
             android.R.layout.simple_dropdown_item_1line,
             listData
         )
-        text_input_new_income_type.setAdapter(arrayAdapter)
-        button_save_new_income.setOnClickListener {
+        text_input_new_expense_type.setAdapter(arrayAdapter)
+        button_save_new_expense.setOnClickListener {
             // Validate
             if (validate()) {
                 // Call database and insert data
 
-                val incomeDB = IncomeDB(database)
+                val expenseDB = ExpenseDB(database)
 
-                if (incomeDB.newIncome(
-                        Income(
-                             incomeID = null,
-                            text_input_new_income_name.text.toString(),
-                            text_input_new_income_date.text.toString(),
-                            text_input_new_income_type.text.toString(),
+                if (expenseDB.newExpense(
+                        Expense(
+                            expenseID = null,
+                            text_input_new_expense_name.text.toString(),
+                            text_input_new_expense_date.text.toString(),
+                            text_input_new_expense_type.text.toString(),
                             PreferenceManager.getDefaultSharedPreferences(this)
                                 .getString("USERNAME", ""),
-                            text_input_new_income_amount.text.toString().toLong()
+                            text_input_new_expense_amount.text.toString().toLong()
                         )
                     )
                 ) {
@@ -92,9 +96,9 @@ class NewIncome : AppCompatActivity() {
         }
 
         // If user did not choose date yet, it becomes error, when view lost focus, remove error message
-        text_input_new_income_date.setOnFocusChangeListener { _, hasFocus ->
+        text_input_new_expense_date.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                text_input_layout_new_income_date.error = null
+                text_input_layout_new_expense_date.error = null
             }
         }
 
@@ -102,42 +106,42 @@ class NewIncome : AppCompatActivity() {
     }
 
     private fun validate(): Boolean {
-        if (text_input_new_income_name.text.toString().isEmpty()) {
-            text_input_layout_new_income_name.error = resources.getString(R.string.cannot_be_empty)
+        if (text_input_new_expense_name.text.toString().isEmpty()) {
+            text_input_layout_new_expense_name.error = resources.getString(R.string.cannot_be_empty)
             return false
         } else {
-            text_input_layout_new_income_name.error = null
+            text_input_layout_new_expense_name.error = null
         }
-        if (text_input_new_income_note.text.toString().isEmpty()) {
-            text_input_layout_new_income_note.error = resources.getString(R.string.cannot_be_empty)
+        if (text_input_new_expense_note.text.toString().isEmpty()) {
+            text_input_layout_new_expense_note.error = resources.getString(R.string.cannot_be_empty)
             return false
         } else {
-            text_input_layout_new_income_note.error = null
+            text_input_layout_new_expense_note.error = null
         }
-        if (text_input_new_income_type.text.toString().isEmpty()) {
-            text_input_layout_new_income_type.error = resources.getString(R.string.didnot_choose)
+        if (text_input_new_expense_type.text.toString().isEmpty()) {
+            text_input_layout_new_expense_type.error = resources.getString(R.string.didnot_choose)
             return false
         } else {
-            text_input_layout_new_income_type.error = null
+            text_input_layout_new_expense_type.error = null
         }
-        if (text_input_new_income_date.text.toString().isEmpty()) {
-            text_input_layout_new_income_date.error =
+        if (text_input_new_expense_date.text.toString().isEmpty()) {
+            text_input_layout_new_expense_date.error =
                 resources.getString(R.string.didnot_choose)
             return false
         } else {
-            text_input_layout_new_income_date.error = null
+            text_input_layout_new_expense_date.error = null
         }
-        if (text_input_new_income_amount.text.toString().isEmpty()) {
-            text_input_layout_new_income_amount.error =
+        if (text_input_new_expense_amount.text.toString().isEmpty()) {
+            text_input_layout_new_expense_amount.error =
                 resources.getString(R.string.cannot_be_empty)
         } else {
-            text_input_layout_new_income_amount.error = null
+            text_input_layout_new_expense_amount.error = null
         }
         return true
     }
 
     private fun setEndIconClickListener() {
-        text_input_layout_new_income_date.setEndIconOnClickListener {
+        text_input_layout_new_expense_date.setEndIconOnClickListener {
             val calendar = Calendar.getInstance()
             val day = calendar.get(Calendar.DAY_OF_MONTH)
             val month = calendar.get(Calendar.MONTH)
@@ -146,12 +150,10 @@ class NewIncome : AppCompatActivity() {
             // New date picker dialog
             val datePickerDialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
                 let {
-                    text_input_new_income_date.setText("$dayOfMonth/${month + 1}/$year")
+                    text_input_new_expense_date.setText("$dayOfMonth/${month + 1}/$year")
                 }
             }, year, month, day)
             datePickerDialog.show()
         }
     }
-
-
 }

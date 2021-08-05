@@ -1,6 +1,6 @@
-package com.example.dieunnph15766_ass.dao
+package com.example.dieunnph15766_ass.dao.user
 
-import com.example.dieunnph15766_ass.model.User
+import com.example.dieunnph15766_ass.model.user.User
 
 interface UserDao {
     fun getAllUsers(): ArrayList<User>

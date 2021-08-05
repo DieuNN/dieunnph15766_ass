@@ -1,4 +1,4 @@
-package com.example.dieunnph15766_ass.model
+package com.example.dieunnph15766_ass.model.user
 
 class User {
     var userId: Long? = null
