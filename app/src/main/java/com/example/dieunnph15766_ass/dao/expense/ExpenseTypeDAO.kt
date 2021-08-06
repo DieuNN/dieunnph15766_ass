@@ -11,5 +11,5 @@ interface ExpenseTypeDAO {
 
     fun removeExpenseType(expense: ExpenseType):Boolean
 
-    fun editExpenseType(expense: ExpenseType):Boolean
+    fun editExpenseType(oldValue:String, newValue:String):Boolean
 }

@@ -5,10 +5,13 @@ import android.view.ViewGroup
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.dieunnph15766_ass.R
+import com.example.dieunnph15766_ass.adapter.IncomeTypeArrayAdapter
 import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.database.income.IncomeTypeDB
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -16,7 +19,9 @@ import com.example.dieunnph15766_ass.dialog.CustomDialogNewIncomeType
 import com.example.dieunnph15766_ass.model.income.IncomeType
 
 class IncomeTypeFragment : Fragment(), CustomDialogNewIncomeType.OnInputSelected {
-    lateinit var textResult: TextView
+    lateinit var adapter: ArrayAdapter<IncomeType>
+    lateinit var database:Database
+    lateinit var incomeTypeList:ArrayList<IncomeType>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,8 +35,16 @@ class IncomeTypeFragment : Fragment(), CustomDialogNewIncomeType.OnInputSelected
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textResult = view.findViewById<TextView>(R.id.textview_recieve_from_custom_dialog)
-        textResult.text = "Text example"
+
+        val listView = view.findViewById<ListView>(R.id.listview_income_type)
+        database = Database(parentFragment?.activity)
+        val incomeTypeDB = IncomeTypeDB(database)
+        incomeTypeList = incomeTypeDB.getAllIncomeType()
+
+
+        adapter = IncomeTypeArrayAdapter(requireContext(), R.layout.income_type_row, incomeTypeList)
+        listView.adapter = adapter
+
         val fab =
             view.findViewById<View>(R.id.floating_action_button_add_new_income_type) as FloatingActionButton
         fab.setOnClickListener {
@@ -39,19 +52,24 @@ class IncomeTypeFragment : Fragment(), CustomDialogNewIncomeType.OnInputSelected
             dialog.setTargetFragment(this, 0)
             dialog.show(parentFragmentManager, "Tag")
         }
-
     }
 
     override fun setText(text: String) {
         // Insert into database
-        val database = Database(parentFragment?.activity)
+        database = Database(parentFragment?.activity)
         val incomeTypeDB = IncomeTypeDB(database)
-        textResult.text = text
         val username = PreferenceManager.getDefaultSharedPreferences(context).getString("USERNAME", "")
         if(incomeTypeDB.newIncomeType(IncomeType(null, text, username))) {
             Toast.makeText(context, "Add successfully", Toast.LENGTH_SHORT).show()
+            adapter.apply {
+                clear()
+                addAll(incomeTypeDB.getAllIncomeType())
+                this.notifyDataSetChanged()
+            }
         } else  {
             Toast.makeText(context, "Add Failed", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 }

@@ -7,7 +7,7 @@ interface IncomeTypeDao {
 
     fun getIncomeType(index:Int): IncomeType
 
-    fun editIncomeType(incomeType: IncomeType):Boolean
+    fun editIncomeType(oldValue:String, newValue:String):Boolean
 
     fun removeIncomeType(incomeType: IncomeType):Boolean
 

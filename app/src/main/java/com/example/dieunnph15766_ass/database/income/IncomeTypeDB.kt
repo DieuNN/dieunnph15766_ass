@@ -2,6 +2,7 @@ package com.example.dieunnph15766_ass.database.income
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import com.example.dieunnph15766_ass.dao.income.IncomeTypeDao
 import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.model.income.IncomeType
@@ -34,18 +35,14 @@ class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
         return list!![index]
     }
 
-    override fun editIncomeType(incomeType: IncomeType): Boolean {
+    override fun editIncomeType(oldValue:String, newValue:String): Boolean {
         sqliteDatabase = db.writableDatabase
-        val values = ContentValues()
-        values.put("INCOME_TYPE_ID", incomeType.incomeTypeID)
-        values.put("INCOME_TYPE_NAME", incomeType.incomeTypeName)
-        values.put("USERNAME", incomeType.userName)
-        return sqliteDatabase!!.update(
-            Database.TABLE_INCOME_TYPE,
-            values,
-            "INCOME_TYPE_NAME = ?",
-            arrayOf(incomeType.incomeTypeName.toString() + "")
-        ) > 0
+        try {
+            sqliteDatabase!!.execSQL("UPDATE INCOME_TYPE SET INCOME_TYPE_NAME = \"$newValue\" WHERE INCOME_TYPE_NAME = \"$oldValue\"")
+            return true
+        } catch (e: SQLiteException) {
+            return false
+        }
     }
 
     override fun removeIncomeType(incomeType: IncomeType): Boolean {
@@ -53,7 +50,7 @@ class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
         return sqliteDatabase!!.delete(
             Database.TABLE_INCOME_TYPE,
             "INCOME_TYPE_NAME = ?",
-            arrayOf(incomeType.incomeTypeName.toString() + "")
+            arrayOf(incomeType.incomeTypeName.toString())
         ) > 0
     }
 

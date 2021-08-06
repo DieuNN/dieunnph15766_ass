@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".fragment.expense.ExpenseTypeFragment">
 
-    <TextView
-        android:id="@+id/recieved_from_custom_dialog_fragment_new_expense_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/income" />
+    <ListView
+        android:id="@+id/lisview_expense"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new_income_type"

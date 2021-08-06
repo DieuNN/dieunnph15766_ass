@@ -2,6 +2,7 @@ package com.example.dieunnph15766_ass.database.expense
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteException
 import com.example.dieunnph15766_ass.dao.expense.ExpenseTypeDAO
 import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.model.expense.ExpenseType
@@ -47,21 +48,18 @@ class ExpenseTypeDB(private val db: Database) : ExpenseTypeDAO {
         sqliteDatabase = db.writableDatabase
         return sqliteDatabase!!.delete(
             Database.TABLE_EXPENSE_TYPE,
-            "OUTCOME_TYPE_ID = ?",
-            arrayOf(expense.expenseID.toString() + "")
+            "EXPENSE_TYPE_NAME = ?",
+            arrayOf(expense.expenseName.toString())
         ) > 0
     }
 
-    override fun editExpenseType(expense: ExpenseType): Boolean {
+    override fun editExpenseType(oldValue: String, newValue: String): Boolean {
         sqliteDatabase = db.writableDatabase
-        val values = ContentValues()
-        values.put("OUTCOME_TYPE_ID", expense.expenseID)
-        values.put("OUTCOME_TYPE_NAME", expense.expenseName)
-        return sqliteDatabase!!.update(
-            Database.TABLE_EXPENSE_TYPE,
-            values,
-            "OUTCOME_TYPE_ID = ?",
-            arrayOf(expense.expenseID.toString() + "")
-        ) > 0
+        try {
+            sqliteDatabase!!.execSQL("UPDATE EXPENSE_TYPE SET EXPENSE_TYPE_NAME =\"$newValue\" WHERE EXPENSE_TYPE_NAME = \"$oldValue\"")
+            return true
+        } catch (e: SQLiteException) {
+            return false
+        }
     }
 }
