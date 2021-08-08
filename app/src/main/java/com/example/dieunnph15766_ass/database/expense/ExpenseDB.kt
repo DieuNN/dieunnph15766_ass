@@ -10,13 +10,22 @@ import kotlin.collections.ArrayList
 
 class ExpenseDB(private val db: Database) : ExpenseDAO {
     private var sqliteDatabase: SQLiteDatabase? = null
-    private val list: ArrayList<Expense>? = null
+    private var list: ArrayList<Expense>? = null
     override fun getAllExpense(): ArrayList<Expense> {
         sqliteDatabase = db.writableDatabase
+        list = ArrayList()
         val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM " + Database.TABLE_EXPENSE, null)
         if (cursor.count > 0) {
+            cursor.moveToFirst()
             while (!cursor.isAfterLast) {
                 val expense = Expense()
+                /*  "CREATE TABLE $TABLE_EXPENSE(
+                EXPENSE_ID INTEGER PRIMARY KEY AUTOINCREMENT ,
+                 EXPENSE_NAME TEXT ,
+                 EXPENSE_DATE TEXT,
+                 EXPENSE_TYPE_NAME TEXT,
+                  USERNAME TEXT,
+                  EXPENSE_AMOUNT REAL)" */
                 expense.expenseID = cursor.getLong(0)
                 expense.expenseName = cursor.getString(1)
                 expense.expenseDate = cursor.getString(2)

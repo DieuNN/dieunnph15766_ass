@@ -11,6 +11,7 @@ import kotlin.collections.ArrayList
 class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
     private var sqliteDatabase: SQLiteDatabase? = null
     private var list: ArrayList<IncomeType>? = null
+
     override fun getAllIncomeType(): ArrayList<IncomeType> {
         sqliteDatabase = db.writableDatabase
         val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM " + Database.TABLE_INCOME_TYPE, null)
@@ -37,11 +38,11 @@ class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
 
     override fun editIncomeType(oldValue:String, newValue:String): Boolean {
         sqliteDatabase = db.writableDatabase
-        try {
+        return try {
             sqliteDatabase!!.execSQL("UPDATE INCOME_TYPE SET INCOME_TYPE_NAME = \"$newValue\" WHERE INCOME_TYPE_NAME = \"$oldValue\"")
-            return true
+            true
         } catch (e: SQLiteException) {
-            return false
+            false
         }
     }
 

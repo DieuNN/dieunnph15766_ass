@@ -10,14 +10,15 @@ import java.util.*
 class IncomeDB(private val db: Database) : IncomeDao {
     private var sqliteDatabase: SQLiteDatabase? = null
     private var list: ArrayList<Income>? = null
+
     override fun getAllIncomes(): ArrayList<Income> {
         sqliteDatabase = db.writableDatabase
         val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM " + Database.TABLE_INCOME, null)
+        list = ArrayList()
         if (cursor.count > 0) {
             cursor.moveToFirst()
             while (!cursor.isAfterLast) {
                 val income = Income()
-                list = ArrayList()
                 income.incomeID = cursor.getLong(0)
                 income.incomeName = cursor.getString(1)
                 income.incomeDate = cursor.getString(2)

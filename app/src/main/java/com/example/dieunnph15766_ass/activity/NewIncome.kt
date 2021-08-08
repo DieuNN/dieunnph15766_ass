@@ -1,6 +1,7 @@
 package com.example.dieunnph15766_ass.activity
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -83,7 +84,10 @@ class NewIncome : AppCompatActivity() {
                     )
                 ) {
                     Toast.makeText(this, resources.getString(R.string.successfully), Toast.LENGTH_SHORT).show()
-                    finish()
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("successful", true)
+                    setResult(0, resultIntent)
+                    onBackPressed()
                 } else {
                     Toast.makeText(this, resources.getString(R.string.failed), Toast.LENGTH_SHORT).show()
                 }

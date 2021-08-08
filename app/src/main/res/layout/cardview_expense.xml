@@ -5,20 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardview_income"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:strokeWidth="1dp"
         app:strokeColor="@color/black"
-        app:cardElevation="3dp"
-        android:layout_marginTop="16dp">
+        app:cardElevation="0dp"
+        android:layout_marginTop="16dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" >
 
             <TextView
-                android:id="@+id/textview_cardview_income_month"
+                android:id="@+id/textview_cardview_expense_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -27,7 +27,7 @@
                 android:textStyle="italic" />
 
             <TextView
-                android:id="@+id/textview_cardview_income_amount"
+                android:id="@+id/textview_cardview_expense_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -39,10 +39,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textview_cardview_income_date"
+                android:id="@+id/textview_cardview_expense_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textview_cardview_income_month"
+                android:layout_below="@+id/textview_cardview_expense_month"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="date example"
@@ -52,25 +52,25 @@
                 android:id="@+id/hr"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/textview_cardview_income_date"
+                android:layout_below="@+id/textview_cardview_expense_date"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/black" />
 
             <TextView
-                android:id="@+id/textview_cardview_income_name"
+                android:id="@+id/textview_cardview_expense_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/hr"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="income example"
+                android:text="expense name example"
                 android:textSize="8pt"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textview_cardview_income_type_name"
-                android:layout_below="@+id/textview_cardview_income_name"
+                android:id="@+id/textview_cardview_expense_type_name"
+                android:layout_below="@+id/textview_cardview_expense_name"
                 android:text="text example"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,7 +78,11 @@
                 android:layout_marginTop="8dp"
                 />
         </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
 
+
+
+
+
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
