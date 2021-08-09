@@ -46,6 +46,8 @@ class ChartFragment : Fragment() {
     lateinit var incomeTotal: TextView
     lateinit var expenseTotal: TextView
     lateinit var userName:String
+    lateinit var startDay:TextInputEditText
+    lateinit var endDay:TextInputEditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,8 +61,8 @@ class ChartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var startDayLayout = view.findViewById<TextInputLayout>(R.id.edit_layout_start_day)
         var endDayLayout = view.findViewById<TextInputLayout>(R.id.edit_layout_end_day)
-        var startDay = view.findViewById<TextInputEditText>(R.id.edittext_start_day)
-        var endDay = view.findViewById<TextInputEditText>(R.id.edittext_end_day)
+        startDay  = view.findViewById<TextInputEditText>(R.id.edittext_start_day)
+        endDay = view.findViewById<TextInputEditText>(R.id.edittext_end_day)
         var dayError = view.findViewById<TextView>(R.id.textview_day_input_error)
         var buttonCalculate = view.findViewById<Button>(R.id.button_calculate)
         incomeTotal = view.findViewById<TextView>(R.id.txt_total_income)
@@ -201,13 +203,15 @@ class ChartFragment : Fragment() {
 
     fun getTotalIncomeForEachIncomeType(
         incomeList: ArrayList<Income>,
-        incomeTypeList: ArrayList<IncomeType>
+        incomeTypeList: ArrayList<IncomeType>, startDay: String, endDay: String
     ): ArrayList<Long> {
         var result = ArrayList<Long>()
         var total: Long = 0
+        var startDayParsed = parseStringToDate(startDay)
+        var endDayParsed = parseStringToDate(endDay)
         for (position in 0 until incomeTypeList.size) {
             for (element in incomeList) {
-                if (incomeTypeList[position].incomeTypeName!! == element.incomeTypeName) {
+                if ((incomeTypeList[position].incomeTypeName!! == element.incomeTypeName) && (parseStringToDate(element.incomeDate!!).after(startDayParsed) && parseStringToDate(element.incomeDate!!).before(endDayParsed))) {
                     total += element.incomeAmount!!
                 }
             }
@@ -245,7 +249,9 @@ class ChartFragment : Fragment() {
             incomeDB.getAllIncomes(PreferenceManager.getDefaultSharedPreferences(requireContext())
                 .getString("USERNAME", "")!!),
             incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .getString("USERNAME", "")!!)
+                .getString("USERNAME", "")!!),
+            startDay.text.toString(),
+            endDay.text.toString(),
         )
         val allIncomeType = incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(requireContext())
             .getString("USERNAME", "")!!)

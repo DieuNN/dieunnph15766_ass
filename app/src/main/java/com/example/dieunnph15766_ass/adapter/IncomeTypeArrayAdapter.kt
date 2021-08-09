@@ -92,7 +92,7 @@ class IncomeTypeArrayAdapter(
                             PreferenceManager.getDefaultSharedPreferences(mContext)
                                 .getString("USERNAME", "")!!
                         )) {
-                        Toast.makeText(mContext, "Edit successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, "Chỉnh sửa thành công!", Toast.LENGTH_SHORT).show()
                         this.apply {
                             clear()
                             addAll(incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(mContext)

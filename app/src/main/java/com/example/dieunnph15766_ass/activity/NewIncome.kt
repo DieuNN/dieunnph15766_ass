@@ -78,7 +78,6 @@ class NewIncome : AppCompatActivity() {
             listData
         )
         text_input_new_income_type.setAdapter(arrayAdapter)
-        Toast.makeText(this, isEditting.toString(), Toast.LENGTH_SHORT).show()
         button_save_new_income.setOnClickListener {
             // Validate
             if (validate()) {

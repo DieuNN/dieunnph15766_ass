@@ -60,7 +60,7 @@ class IncomeTypeFragment : Fragment(), CustomDialogNewIncomeType.OnInputSelected
         val incomeTypeDB = IncomeTypeDB(database)
         val username = PreferenceManager.getDefaultSharedPreferences(context).getString("USERNAME", "")
         if(incomeTypeDB.newIncomeType(IncomeType(null, text, username))) {
-            Toast.makeText(context, "Add successfully", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Thêm mới thành công", Toast.LENGTH_SHORT).show()
             adapter.apply {
                 clear()
                 addAll(incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(requireContext())
@@ -68,7 +68,7 @@ class IncomeTypeFragment : Fragment(), CustomDialogNewIncomeType.OnInputSelected
                 this.notifyDataSetChanged()
             }
         } else  {
-            Toast.makeText(context, "Add Failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Thêm mới thất bại", Toast.LENGTH_SHORT).show()
         }
     }
 

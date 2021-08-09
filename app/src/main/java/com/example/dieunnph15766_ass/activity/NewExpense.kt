@@ -77,11 +77,6 @@ class NewExpense : AppCompatActivity() {
             listData
         )
         text_input_new_expense_type.setAdapter(arrayAdapter)
-        Toast.makeText(
-            this,
-            isEditting1.toString(),
-            Toast.LENGTH_SHORT
-        ).show()
         button_save_new_expense.setOnClickListener {
             // Validate
             if (validate()) {

@@ -62,8 +62,8 @@ class RecyclerViewExpenseAdapter(private val mContext:Context ,private var mList
             v: View?,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-            menu?.add(adapterPosition, DELETE, 0, "Delete")
-            menu?.add(adapterPosition, EDIT, 1, "Edit")
+            menu?.add(adapterPosition, DELETE, 0, "Xoá")
+            menu?.add(adapterPosition, EDIT, 1, "Sửa")
         }
     }
 

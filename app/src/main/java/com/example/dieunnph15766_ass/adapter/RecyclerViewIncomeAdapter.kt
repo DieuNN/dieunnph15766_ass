@@ -58,8 +58,8 @@ class RecyclerViewIncomeAdapter(private val mContext:Context,private var mList: 
             v: View?,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-            menu?.add(adapterPosition, 121, 0, "Delete")
-            menu?.add(adapterPosition, 122, 1, "Edit")
+            menu?.add(adapterPosition, 121, 0, "Xoá")
+            menu?.add(adapterPosition, 122, 1, "Sửa")
         }
 
     }
@@ -90,7 +90,6 @@ class RecyclerViewIncomeAdapter(private val mContext:Context,private var mList: 
         intent.putExtra("IncomeAmount", mList[position].incomeAmount)
         intent.putExtra("IncomeNote", mList[position].incomeNote)
         (mContext as Activity).startActivityForResult(intent, 1)
-        Toast.makeText(mContext, "Start activity for result successful", Toast.LENGTH_SHORT).show()
 //
         val database = Database(mContext)
         val incomeDB = IncomeDB(database)
