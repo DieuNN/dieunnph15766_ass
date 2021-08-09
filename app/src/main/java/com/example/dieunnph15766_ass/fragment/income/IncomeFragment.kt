@@ -57,23 +57,6 @@ class IncomeFragment
             startActivityForResult(Intent(requireContext(), NewIncome::class.java), 0)
         }
 
-        recyclerview.addOnScrollListener( object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-                if(!recyclerView.canScrollVertically(1)) {
-                    floatingActionButton.apply {
-                        visibility = View.INVISIBLE
-                        isEnabled = false
-                    }
-                } else {
-                    floatingActionButton.apply {
-                        visibility = View.VISIBLE
-                        isEnabled = true
-                    }
-                }
-            }
-        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

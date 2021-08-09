@@ -60,23 +60,6 @@ class ExpenseFragment : Fragment() {
             startActivityForResult(Intent(requireContext(), NewExpense::class.java), 101)
         }
 
-        recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-                if (!recyclerview.canScrollVertically(1)) {
-                    fab.apply {
-                        visibility = View.INVISIBLE
-                        isEnabled = false
-                    }
-                } else {
-                    fab.apply {
-                        visibility = View.VISIBLE
-                        isEnabled = true
-                    }
-                }
-            }
-        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
