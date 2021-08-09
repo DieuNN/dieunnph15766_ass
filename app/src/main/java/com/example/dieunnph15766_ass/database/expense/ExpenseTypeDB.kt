@@ -11,9 +11,9 @@ import java.util.*
 class ExpenseTypeDB(private val db: Database) : ExpenseTypeDAO {
     private var sqliteDatabase: SQLiteDatabase? = null
     private var list: ArrayList<ExpenseType>? = null
-    override fun getAllExpenseType(): ArrayList<ExpenseType> {
+    override fun getAllExpenseType(username: String): ArrayList<ExpenseType> {
         sqliteDatabase = db.writableDatabase
-        val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM " + Database.TABLE_EXPENSE_TYPE, null)
+        val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM ${Database.TABLE_EXPENSE_TYPE} WHERE USERNAME = \"${username}\" " , null)
         list = ArrayList()
         if (cursor.count > 0) {
             cursor.moveToFirst()
@@ -44,7 +44,7 @@ class ExpenseTypeDB(private val db: Database) : ExpenseTypeDAO {
         return sqliteDatabase!!.insert(Database.TABLE_EXPENSE_TYPE, null, values) > 0
     }
 
-    override fun removeExpenseType(expense: ExpenseType): Boolean {
+    override fun removeExpenseType(expense: ExpenseType, username: String): Boolean {
         sqliteDatabase = db.writableDatabase
         return sqliteDatabase!!.delete(
             Database.TABLE_EXPENSE_TYPE,
@@ -53,7 +53,7 @@ class ExpenseTypeDB(private val db: Database) : ExpenseTypeDAO {
         ) > 0
     }
 
-    override fun editExpenseType(oldValue: String, newValue: String): Boolean {
+    override fun editExpenseType(oldValue: String, newValue: String, username: String): Boolean {
         sqliteDatabase = db.writableDatabase
         try {
             sqliteDatabase!!.execSQL("UPDATE EXPENSE_TYPE SET EXPENSE_TYPE_NAME =\"$newValue\" WHERE EXPENSE_TYPE_NAME = \"$oldValue\"")

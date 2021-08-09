@@ -3,6 +3,7 @@ package com.example.dieunnph15766_ass.adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.preference.PreferenceManager
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,7 @@ class RecyclerViewExpenseAdapter(private val mContext:Context ,private var mList
         // Month not implement yet.
         holder.type.text = "Loại: ${mList[position].expenseTypeName}"
         holder.name.text = mList[position].expenseName
+        holder.note.text = mList[position].expenseNote
     }
 
     override fun getItemCount(): Int {
@@ -42,16 +44,17 @@ class RecyclerViewExpenseAdapter(private val mContext:Context ,private var mList
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnCreateContextMenuListener {
-        var month: TextView = itemView.findViewById(R.id.textview_cardview_expense_month)
         var amount: TextView = itemView.findViewById(R.id.textview_cardview_expense_amount)
         var date: TextView = itemView.findViewById(R.id.textview_cardview_expense_date)
         var name: TextView = itemView.findViewById(R.id.textview_cardview_expense_name)
         var type: TextView = itemView.findViewById(R.id.textview_cardview_expense_type_name)
+        var note:TextView = itemView.findViewById(R.id.textview_cardview_expense_note)
         var cardView = itemView.findViewById<CardView>(R.id.cardview_expense)
+        var userName:String
 
         init {
             cardView.setOnCreateContextMenuListener(this)
-
+            userName = PreferenceManager.getDefaultSharedPreferences(mContext).getString("USERNAME", "")!!
         }
 
         override fun onCreateContextMenu(
@@ -73,9 +76,10 @@ class RecyclerViewExpenseAdapter(private val mContext:Context ,private var mList
         val database = Database(mContext)
         val expenseDB = ExpenseDB(database)
 
-        expenseDB.removeExpense(mList[position])
+        expenseDB.removeExpense(mList[position],PreferenceManager.getDefaultSharedPreferences(mContext)
+            .getString("USERNAME", "")!!)
         mList.clear()
-        mList = expenseDB.getAllExpense()
+        mList = expenseDB.getAllExpense(PreferenceManager.getDefaultSharedPreferences(mContext).getString("USERNAME", "")!!)
         this.notifyDataSetChanged()
     }
 
@@ -85,13 +89,15 @@ class RecyclerViewExpenseAdapter(private val mContext:Context ,private var mList
         intent.putExtra("ExpenseType", mList[position].expenseTypeName)
         intent.putExtra("ExpenseDate", mList[position].expenseDate)
         intent.putExtra("ExpenseAmount", mList[position].expenseAmount)
+        intent.putExtra("ExpenseNote", mList[position].expenseNote)
 
         (mContext as Activity).startActivityForResult(intent, 101)
 
         val database = Database(mContext)
         val expenseDB = ExpenseDB(database)
 
-        expenseDB.editExpense(mList[position])
+        expenseDB.editExpense(mList[position], PreferenceManager.getDefaultSharedPreferences(mContext)
+            .getString("USERNAME", "")!!)
     }
 
 

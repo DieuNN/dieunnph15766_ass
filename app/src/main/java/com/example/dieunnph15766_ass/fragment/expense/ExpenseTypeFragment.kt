@@ -46,7 +46,7 @@ class ExpenseTypeFragment : Fragment(), CustomDialogNewExpenseType.OnInputSelect
         adapter = ExpenseTypeArrayAdapter(
             requireContext(),
             R.layout.expense_type_row,
-            expenseTypeDB.getAllExpenseType()
+            expenseTypeDB.getAllExpenseType(PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("USERNAME", "")!!)
         )
         listView.adapter = adapter
     }
@@ -61,7 +61,7 @@ class ExpenseTypeFragment : Fragment(), CustomDialogNewExpenseType.OnInputSelect
             Toast.makeText(context, "Add successfully", Toast.LENGTH_SHORT).show()
             adapter.apply {
                 clear()
-                addAll(expenseTypeDB.getAllExpenseType())
+                addAll(expenseTypeDB.getAllExpenseType(PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("USERNAME", "")!!))
                 notifyDataSetChanged()
             }
         } else {

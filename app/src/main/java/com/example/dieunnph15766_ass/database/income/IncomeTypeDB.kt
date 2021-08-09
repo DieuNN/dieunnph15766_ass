@@ -12,9 +12,9 @@ class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
     private var sqliteDatabase: SQLiteDatabase? = null
     private var list: ArrayList<IncomeType>? = null
 
-    override fun getAllIncomeType(): ArrayList<IncomeType> {
+    override fun getAllIncomeType(username: String): ArrayList<IncomeType> {
         sqliteDatabase = db.writableDatabase
-        val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM " + Database.TABLE_INCOME_TYPE, null)
+        val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM ${Database.TABLE_INCOME_TYPE} WHERE USERNAME = \"${username}\"", null)
         list = ArrayList()
         if (cursor.count > 0) {
             cursor.moveToFirst()
@@ -36,22 +36,22 @@ class IncomeTypeDB(private val db: Database) : IncomeTypeDao {
         return list!![index]
     }
 
-    override fun editIncomeType(oldValue:String, newValue:String): Boolean {
+    override fun editIncomeType(oldValue: String, newValue: String, username: String): Boolean {
         sqliteDatabase = db.writableDatabase
         return try {
-            sqliteDatabase!!.execSQL("UPDATE INCOME_TYPE SET INCOME_TYPE_NAME = \"$newValue\" WHERE INCOME_TYPE_NAME = \"$oldValue\"")
+            sqliteDatabase!!.execSQL("UPDATE INCOME_TYPE SET INCOME_TYPE_NAME = \"$newValue\" WHERE INCOME_TYPE_NAME = \"$oldValue\" AND USERNAME = \"$username\"")
             true
         } catch (e: SQLiteException) {
             false
         }
     }
 
-    override fun removeIncomeType(incomeType: IncomeType): Boolean {
+    override fun removeIncomeType(incomeType: IncomeType, username: String): Boolean {
         sqliteDatabase = db.writableDatabase
         return sqliteDatabase!!.delete(
             Database.TABLE_INCOME_TYPE,
-            "INCOME_TYPE_NAME = ?",
-            arrayOf(incomeType.incomeTypeName.toString())
+            "INCOME_TYPE_NAME = ? AND USERNAME = ?",
+            arrayOf(incomeType.incomeTypeName, username)
         ) > 0
     }
 

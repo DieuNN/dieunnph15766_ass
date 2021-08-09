@@ -11,9 +11,9 @@ class IncomeDB(private val db: Database) : IncomeDao {
     private var sqliteDatabase: SQLiteDatabase? = null
     private var list: ArrayList<Income>? = null
 
-    override fun getAllIncomes(): ArrayList<Income> {
+    override fun getAllIncomes(username: String): ArrayList<Income> {
         sqliteDatabase = db.writableDatabase
-        val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM " + Database.TABLE_INCOME, null)
+        val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM ${Database.TABLE_INCOME} WHERE USERNAME = \"${username}\" " , null)
         list = ArrayList()
         if (cursor.count > 0) {
             cursor.moveToFirst()
@@ -25,6 +25,7 @@ class IncomeDB(private val db: Database) : IncomeDao {
                 income.incomeTypeName = cursor.getString(3)
                 income.userName = cursor.getString(4)
                 income.incomeAmount = cursor.getLong(5)
+                income.incomeNote = cursor.getString(6)
                 list!!.add(income)
                 cursor.moveToNext()
             }
@@ -47,10 +48,11 @@ class IncomeDB(private val db: Database) : IncomeDao {
         values.put("INCOME_TYPE_NAME", income.incomeTypeName)
         values.put("USERNAME", income.userName)
         values.put("INCOME_AMOUNT", income.incomeAmount)
+        values.put("INCOME_NOTE", income.incomeNote)
         return sqliteDatabase!!.insert(Database.TABLE_INCOME, null, values) > 0
     }
 
-    override fun editIncome(income: Income): Boolean {
+    override fun editIncome(income: Income, username: String): Boolean {
         sqliteDatabase = db.writableDatabase
         val values = ContentValues()
         values.put("INCOME_NAME", income.incomeName)
@@ -58,20 +60,21 @@ class IncomeDB(private val db: Database) : IncomeDao {
         values.put("INCOME_TYPE_NAME", income.incomeTypeName)
         values.put("USERNAME", income.userName)
         values.put("INCOME_AMOUNT", income.incomeAmount)
+        values.put("INCOME_NOTE", income.incomeNote)
         return sqliteDatabase!!.update(
             Database.TABLE_INCOME,
             values,
-            "INCOME_NAME = ?",
-            arrayOf("" + income.incomeName)
+            "INCOME_NAME = ? AND USERNAME = ?",
+            arrayOf(income.incomeName, username)
         ) > 0
     }
 
-    override fun removeIncome(income: Income): Boolean {
+    override fun removeIncome(income: Income, username: String): Boolean {
         sqliteDatabase = db.writableDatabase
         return sqliteDatabase!!.delete(
             Database.TABLE_INCOME,
-            "INCOME_NAME = ?",
-            arrayOf("" + income.incomeName)
+            "INCOME_NAME = ? AND USERNAME = ?",
+            arrayOf(income.incomeName, username)
         ) > 0
     }
 }

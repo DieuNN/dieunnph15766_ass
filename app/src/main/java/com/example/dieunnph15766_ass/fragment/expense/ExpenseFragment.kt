@@ -2,24 +2,24 @@ package com.example.dieunnph15766_ass.fragment.expense
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dieunnph15766_ass.R
 import com.example.dieunnph15766_ass.activity.NewExpense
 import com.example.dieunnph15766_ass.adapter.RecyclerViewExpenseAdapter
-import com.example.dieunnph15766_ass.adapter.RecyclerViewIncomeAdapter
 import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.database.expense.ExpenseDB
-import com.example.dieunnph15766_ass.database.income.IncomeDB
 import com.example.dieunnph15766_ass.model.expense.Expense
-import com.example.dieunnph15766_ass.model.income.Income
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ExpenseFragment : Fragment() {
@@ -29,6 +29,7 @@ class ExpenseFragment : Fragment() {
     lateinit var expenseList: ArrayList<Expense>
     lateinit var recyclerview: RecyclerView
     var isInsertSuccess: Boolean? = false
+    lateinit var userName:String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,14 +39,16 @@ class ExpenseFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_expense, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fab = view.findViewById<FloatingActionButton>(R.id.fab_new_expense)
         recyclerview = view.findViewById(R.id.recyclerview_expense)
         database = Database(requireContext())
         expenseDB = ExpenseDB(database)
+        userName = PreferenceManager.getDefaultSharedPreferences(context).getString("USERNAME", "")!!
 
-        expenseList = expenseDB.getAllExpense()
+        expenseList = expenseDB.getAllExpense(userName!!)
 
         adapter = RecyclerViewExpenseAdapter(requireContext(), expenseList)
 
@@ -81,7 +84,7 @@ class ExpenseFragment : Fragment() {
 
         isInsertSuccess = data?.getBooleanExtra("successful", false)
         expenseList.clear()
-        expenseList = expenseDB.getAllExpense()
+        expenseList = expenseDB.getAllExpense(userName)
         adapter = RecyclerViewExpenseAdapter(requireContext(), expenseList)
         recyclerview.adapter = adapter
 
@@ -115,7 +118,7 @@ class ExpenseFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         expenseList.clear()
-        expenseList = expenseDB.getAllExpense()
+        expenseList = expenseDB.getAllExpense(userName)
         adapter = RecyclerViewExpenseAdapter(requireContext(), expenseList)
         recyclerview.adapter = adapter
     }

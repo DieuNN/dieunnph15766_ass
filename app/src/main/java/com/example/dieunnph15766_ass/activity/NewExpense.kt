@@ -46,7 +46,7 @@ class NewExpense : AppCompatActivity() {
         // Get data from Income Type
         val database = Database(this)
         var expenseTypeDB = ExpenseTypeDB(database)
-        var listExpenseType: ArrayList<ExpenseType> = expenseTypeDB.getAllExpenseType()
+        var listExpenseType: ArrayList<ExpenseType> = expenseTypeDB.getAllExpenseType(PreferenceManager.getDefaultSharedPreferences(this).getString("USERNAME", "")!!)
 
         var listData = ArrayList<String>()
 
@@ -67,6 +67,7 @@ class NewExpense : AppCompatActivity() {
             text_input_new_expense_amount.setText(
                 intent.getLongExtra("ExpenseAmount", 0).toString()
             )
+            text_input_new_expense_note.setText(intent.getStringExtra("ExpenseNote"))
         }
 
         // Set data for auto AutoCompleteTextView
@@ -97,7 +98,9 @@ class NewExpense : AppCompatActivity() {
                             PreferenceManager.getDefaultSharedPreferences(this)
                                 .getString("USERNAME", ""),
                             text_input_new_expense_amount.text.toString().toLong(),
-                        )
+                            text_input_new_expense_note.text.toString()
+                        ),PreferenceManager.getDefaultSharedPreferences(this)
+                            .getString("USERNAME", "")!!,
                     )
                 ) {
                     Toast.makeText(
@@ -119,6 +122,7 @@ class NewExpense : AppCompatActivity() {
                                 PreferenceManager.getDefaultSharedPreferences(this)
                                     .getString("USERNAME", ""),
                                 text_input_new_expense_amount.text.toString().toLong(),
+                                text_input_new_expense_note.text.toString()
                             )
                         )
                     ) {

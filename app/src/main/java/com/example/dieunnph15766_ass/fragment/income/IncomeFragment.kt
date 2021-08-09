@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -18,7 +19,6 @@ import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.database.income.IncomeDB
 import com.example.dieunnph15766_ass.model.income.Income
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.lang.ProcessBuilder.Redirect.to
 
 class IncomeFragment
     : Fragment() {
@@ -42,7 +42,9 @@ class IncomeFragment
         database = Database(requireContext())
         incomeDB = IncomeDB(database)
 
-        incomeList = incomeDB.getAllIncomes()
+        incomeList = incomeDB.getAllIncomes(
+            PreferenceManager.getDefaultSharedPreferences(requireContext())
+            .getString("USERNAME", "")!!)
 
         adapter = RecyclerViewIncomeAdapter(requireContext(), incomeList)
 
@@ -79,7 +81,8 @@ class IncomeFragment
 
 //                isInsertSuccess = data?.getBooleanExtra("successful", false)
                 incomeList.clear()
-                incomeList = incomeDB.getAllIncomes()
+                incomeList = incomeDB.getAllIncomes(PreferenceManager.getDefaultSharedPreferences(requireContext())
+                    .getString("USERNAME", "")!!)
                 adapter = RecyclerViewIncomeAdapter(requireContext(), incomeList)
                 recyclerview.adapter = adapter
     }
@@ -114,7 +117,8 @@ class IncomeFragment
     override fun onResume() {
         super.onResume()
         incomeList.clear()
-        incomeList = incomeDB.getAllIncomes()
+        incomeList = incomeDB.getAllIncomes(PreferenceManager.getDefaultSharedPreferences(requireContext())
+            .getString("USERNAME", "")!!)
         adapter = RecyclerViewIncomeAdapter(requireContext(), incomeList)
         recyclerview.adapter = adapter
     }

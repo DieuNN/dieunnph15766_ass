@@ -47,7 +47,8 @@ class NewIncome : AppCompatActivity() {
         val database = Database(this)
         var incomeTypeDB = IncomeTypeDB(database)
         var listIncomeType = ArrayList<IncomeType>()
-        listIncomeType = incomeTypeDB.getAllIncomeType()
+        listIncomeType = incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(this)
+            .getString("USERNAME", "")!!)
 
         var listData = ArrayList<String>()
 
@@ -66,6 +67,7 @@ class NewIncome : AppCompatActivity() {
             text_input_new_income_type.setText(intent.getStringExtra("IncomeType"))
             text_input_new_income_date.setText(intent.getStringExtra("IncomeDate"))
             text_input_new_income_amount.setText(intent.getLongExtra("IncomeAmount", 0).toString())
+            text_input_new_income_note.setText(intent.getStringExtra("IncomeNote"))
         }
 
 
@@ -92,8 +94,10 @@ class NewIncome : AppCompatActivity() {
                             text_input_new_income_type.text.toString(),
                             PreferenceManager.getDefaultSharedPreferences(this)
                                 .getString("USERNAME", ""),
-                            text_input_new_income_amount.text.toString().toLong()
-                        )
+                            text_input_new_income_amount.text.toString().toLong(),
+                            text_input_new_income_note.text.toString()
+                        ), PreferenceManager.getDefaultSharedPreferences(this)
+                            .getString("USERNAME", "")!!
                     )
                 ) {
                     Toast.makeText(
@@ -115,6 +119,7 @@ class NewIncome : AppCompatActivity() {
                                 PreferenceManager.getDefaultSharedPreferences(this)
                                     .getString("USERNAME", ""),
                                 text_input_new_income_amount.text.toString().toLong()
+                            , text_input_new_income_note.text.toString()
                             )
                         )
                     ) {

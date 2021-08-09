@@ -3,13 +3,13 @@ package com.example.dieunnph15766_ass.fragment
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.constraintlayout.motion.utils.Easing
 import com.example.dieunnph15766_ass.R
 import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.database.expense.ExpenseDB
@@ -45,6 +45,7 @@ class ChartFragment : Fragment() {
     lateinit var total: TextView
     lateinit var incomeTotal: TextView
     lateinit var expenseTotal: TextView
+    lateinit var userName:String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,6 +73,7 @@ class ChartFragment : Fragment() {
         expenseDB = ExpenseDB(database)
         incomeTypeDB = IncomeTypeDB(database)
         expenseTypeDB = ExpenseTypeDB(database)
+        userName = PreferenceManager.getDefaultSharedPreferences(context).getString("USERNAME", "")!!
         startDayLayout.setEndIconOnClickListener {
             val calendar = Calendar.getInstance()
             val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -114,20 +116,24 @@ class ChartFragment : Fragment() {
                 -1 -> apply {
                     dayError.visibility = View.INVISIBLE
                     incomeTotal.text = getTotalIncome(
-                        incomeDB.getAllIncomes(),
+                        incomeDB.getAllIncomes(PreferenceManager.getDefaultSharedPreferences(requireContext())
+                            .getString("USERNAME", "")!!),
                         startDay.text.toString(),
                         endDay.text.toString()
                     ).toString()
                     expenseTotal.text = getTotalExpense(
-                        expenseDB.getAllExpense(),
+                        expenseDB.getAllExpense(userName),
                         startDay.text.toString(),
                         endDay.text.toString()
                     ).toString()
                     total.text = (incomeTotal.text.toString().toInt() - expenseTotal.text.toString()
                         .toInt()).toString()
 
-                    if(incomeDB.getAllIncomes().size == 0 || incomeTypeDB.getAllIncomeType().size == 0 || expenseDB.getAllExpense().size == 0 || expenseTypeDB.getAllExpenseType().size == 0) {
+                    if(incomeDB.getAllIncomes(PreferenceManager.getDefaultSharedPreferences(requireContext())
+                            .getString("USERNAME", "")!!).size == 0 || incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(requireContext())
+                            .getString("USERNAME", "")!!).size == 0 || expenseDB.getAllExpense(userName).size == 0 || expenseTypeDB.getAllExpenseType(PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("USERNAME", "")!!).size == 0) {
                         dayError.text = "Chưa đủ dữ liệu để thống kê!"
+                        dayError.visibility = View.VISIBLE
                         return@setOnClickListener
                     }
 
@@ -236,10 +242,13 @@ class ChartFragment : Fragment() {
         val entries = ArrayList<PieEntry>()
         var color = ArrayList<Int>()
         var totalIncomeForEachType = getTotalIncomeForEachIncomeType(
-            incomeDB.getAllIncomes(),
-            incomeTypeDB.getAllIncomeType()
+            incomeDB.getAllIncomes(PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .getString("USERNAME", "")!!),
+            incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .getString("USERNAME", "")!!)
         )
-        val allIncomeType = incomeTypeDB.getAllIncomeType()
+        val allIncomeType = incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(requireContext())
+            .getString("USERNAME", "")!!)
         val totalIncome = incomeTotal.text.toString().toLong()
 
         for (i in 0 until allIncomeType.size) {
@@ -301,11 +310,11 @@ class ChartFragment : Fragment() {
         val entries = ArrayList<PieEntry>()
         var color = ArrayList<Int>()
         var totalExpenseForEachType = getTotalExpenseForEachIncomeType(
-            expenseDB.getAllExpense(),
-            expenseTypeDB.getAllExpenseType()
+            expenseDB.getAllExpense(userName),
+            expenseTypeDB.getAllExpenseType(PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("USERNAME", "")!!)
         )
         val totalExpense = expenseTotal.text.toString().toLong()
-        val allExpenseType = expenseTypeDB.getAllExpenseType()
+        val allExpenseType = expenseTypeDB.getAllExpenseType(PreferenceManager.getDefaultSharedPreferences(requireContext()).getString("USERNAME", "")!!)
 
         for (i in 0 until allExpenseType.size) {
             entries.add(

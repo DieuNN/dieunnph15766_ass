@@ -7,7 +7,6 @@ import android.preference.PreferenceManager
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.dieunnph15766_ass.R
@@ -39,7 +38,8 @@ class IncomeTypeFragment : Fragment(), CustomDialogNewIncomeType.OnInputSelected
         val listView = view.findViewById<ListView>(R.id.listview_income_type)
         database = Database(parentFragment?.activity)
         val incomeTypeDB = IncomeTypeDB(database)
-        incomeTypeList = incomeTypeDB.getAllIncomeType()
+        incomeTypeList = incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(requireContext())
+            .getString("USERNAME", "")!!)
 
 
         adapter = IncomeTypeArrayAdapter(requireContext(), R.layout.income_type_row, incomeTypeList)
@@ -63,7 +63,8 @@ class IncomeTypeFragment : Fragment(), CustomDialogNewIncomeType.OnInputSelected
             Toast.makeText(context, "Add successfully", Toast.LENGTH_SHORT).show()
             adapter.apply {
                 clear()
-                addAll(incomeTypeDB.getAllIncomeType())
+                addAll(incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(requireContext())
+                    .getString("USERNAME", "")!!))
                 this.notifyDataSetChanged()
             }
         } else  {

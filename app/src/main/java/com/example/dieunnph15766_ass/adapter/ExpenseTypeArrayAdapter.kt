@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -39,11 +40,12 @@ class ExpenseTypeArrayAdapter(
                     dialog.dismiss()
                 }
                 .setPositiveButton("Xoá") { _, _ ->
-                    if (expenseTypeDB.removeExpenseType(mList[position])) {
+                    if (expenseTypeDB.removeExpenseType(mList[position], PreferenceManager.getDefaultSharedPreferences(mContext)
+                            .getString("USERNAME", "")!!)) {
                         Toast.makeText(mContext, "Xoá thành công", Toast.LENGTH_SHORT).show()
                         this.apply {
                             clear()
-                            addAll(expenseTypeDB.getAllExpenseType())
+                            addAll(expenseTypeDB.getAllExpenseType(PreferenceManager.getDefaultSharedPreferences(mContext).getString("USERNAME", "")!!))
                         }
                     } else {
                         Toast.makeText(mContext, "Xoá thất bại", Toast.LENGTH_SHORT).show()
@@ -77,13 +79,14 @@ class ExpenseTypeArrayAdapter(
 
                     if (expenseTypeDB.editExpenseType(
                             bundle.getString("bundle")!!,
-                            input.text.toString()
+                            input.text.toString(),
+                            PreferenceManager.getDefaultSharedPreferences(mContext).getString("USERNAME", "")!!
                         )
                     ) {
                         Toast.makeText(mContext, "Edit successfully", Toast.LENGTH_SHORT).show()
                         this.apply {
                             clear()
-                            addAll(expenseTypeDB.getAllExpenseType())
+                            addAll(expenseTypeDB.getAllExpenseType(PreferenceManager.getDefaultSharedPreferences(mContext).getString("USERNAME", "")!!))
                         }
                     } else {
                         Toast.makeText(mContext, "Edit failed", Toast.LENGTH_SHORT).show()

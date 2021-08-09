@@ -5,16 +5,18 @@ import android.database.sqlite.SQLiteDatabase
 import com.example.dieunnph15766_ass.dao.expense.ExpenseDAO
 import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.model.expense.Expense
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ExpenseDB(private val db: Database) : ExpenseDAO {
     private var sqliteDatabase: SQLiteDatabase? = null
     private var list: ArrayList<Expense>? = null
-    override fun getAllExpense(): ArrayList<Expense> {
+    override fun getAllExpense(username: String): ArrayList<Expense> {
         sqliteDatabase = db.writableDatabase
         list = ArrayList()
-        val cursor = sqliteDatabase!!.rawQuery("SELECT * FROM " + Database.TABLE_EXPENSE, null)
+        val cursor = sqliteDatabase!!.rawQuery(
+            "SELECT * FROM  ${Database.TABLE_EXPENSE} WHERE USERNAME = \"${username}\" ",
+            null
+        )
         if (cursor.count > 0) {
             cursor.moveToFirst()
             while (!cursor.isAfterLast) {
@@ -32,6 +34,7 @@ class ExpenseDB(private val db: Database) : ExpenseDAO {
                 expense.expenseTypeName = cursor.getString(3)
                 expense.userName = cursor.getString(4)
                 expense.expenseAmount = cursor.getLong(5)
+                expense.expenseNote = cursor.getString(6)
                 list!!.add(expense)
                 cursor.moveToNext()
             }
@@ -54,10 +57,11 @@ class ExpenseDB(private val db: Database) : ExpenseDAO {
         values.put("EXPENSE_TYPE_NAME", expense.expenseTypeName)
         values.put("USERNAME", expense.userName)
         values.put("EXPENSE_AMOUNT", expense.expenseAmount)
+        values.put("EXPENSE_NOTE", expense.expenseNote)
         return sqliteDatabase!!.insert(Database.TABLE_EXPENSE, null, values) > 0
     }
 
-    override fun editExpense(expense: Expense): Boolean {
+    override fun editExpense(expense: Expense, username: String): Boolean {
         sqliteDatabase = db.writableDatabase
         val values = ContentValues()
         values.put("EXPENSE_NAME", expense.expenseName)
@@ -65,20 +69,21 @@ class ExpenseDB(private val db: Database) : ExpenseDAO {
         values.put("EXPENSE_TYPE_NAME", expense.expenseTypeName)
         values.put("USERNAME", expense.userName)
         values.put("EXPENSE_AMOUNT", expense.expenseAmount)
+        values.put("EXPENSE_NOTE", expense.expenseNote)
         return sqliteDatabase!!.update(
             Database.TABLE_EXPENSE,
             values,
-            "EXPENSE_NAME = ?",
-            arrayOf(expense.expenseName.toString() + "")
+            "EXPENSE_NAME = ? AND USERNAME = ?",
+            arrayOf(expense.expenseName.toString(), username)
         ) > 0
     }
 
-    override fun removeExpense(expense: Expense): Boolean {
+    override fun removeExpense(expense: Expense, username: String): Boolean {
         sqliteDatabase = db.writableDatabase
         return sqliteDatabase!!.delete(
             Database.TABLE_EXPENSE,
-            "EXPENSE_NAME = ?",
-            arrayOf(expense.expenseName.toString() + "")
+            "EXPENSE_NAME = ? AND USERNAME = ?",
+            arrayOf(expense.expenseName.toString(), username)
         ) > 0
     }
 }

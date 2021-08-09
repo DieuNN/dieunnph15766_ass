@@ -7,6 +7,7 @@ class Expense {
     var expenseTypeName:String? = null
     var userName:String? = null
     var expenseAmount:Long? = null
+    var expenseNote:String? = null
 
     constructor(
          expenseID:Long?,
@@ -15,6 +16,7 @@ class Expense {
          expenseTypeName:String?,
          userName:String? ,
          expenseAmount:Long? ,
+         expenseNote: String?,
     ) {
         this.expenseID = expenseID
         this.expenseName = expenseName
@@ -22,6 +24,7 @@ class Expense {
         this.expenseTypeName = expenseTypeName
         this.userName = userName
         this.expenseAmount = expenseAmount
+        this.expenseNote = expenseNote
     }
 
     constructor()

@@ -1,25 +1,19 @@
 package com.example.dieunnph15766_ass.adapter
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import com.example.dieunnph15766_ass.R
 import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.database.income.IncomeTypeDB
-import com.example.dieunnph15766_ass.dialog.CustomDialogEditIncomeType
-import com.example.dieunnph15766_ass.fragment.income.IncomeTypeFragment
 import com.example.dieunnph15766_ass.model.income.IncomeType
 
 class IncomeTypeArrayAdapter(
@@ -51,13 +45,15 @@ class IncomeTypeArrayAdapter(
                     dialog.dismiss()
                 }
                 .setPositiveButton("Xoá") { _, _ ->
-                    if (incomeTypeDB.removeIncomeType(mList[position])) {
+                    if (incomeTypeDB.removeIncomeType(mList[position], PreferenceManager.getDefaultSharedPreferences(mContext)
+                            .getString("USERNAME", "")!!)) {
                         Toast.makeText(mContext, "Xoá thành công", Toast.LENGTH_SHORT).show()
 
                         // Refresh adapter
                         this.apply {
                             clear()
-                            addAll(incomeTypeDB.getAllIncomeType())
+                            addAll(incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(mContext)
+                                .getString("USERNAME", "")!!))
                         }
                     } else {
                         Toast.makeText(mContext, "Xoá thất bại", Toast.LENGTH_SHORT).show()
@@ -90,11 +86,17 @@ class IncomeTypeArrayAdapter(
                         return@setPositiveButton
                     }
 
-                    if(incomeTypeDB.editIncomeType(bundle.getString("bundle")!!, input.text.toString())) {
+                    if(incomeTypeDB.editIncomeType(
+                            bundle.getString("bundle")!!,
+                            input.text.toString(),
+                            PreferenceManager.getDefaultSharedPreferences(mContext)
+                                .getString("USERNAME", "")!!
+                        )) {
                         Toast.makeText(mContext, "Edit successfully", Toast.LENGTH_SHORT).show()
                         this.apply {
                             clear()
-                            addAll(incomeTypeDB.getAllIncomeType())
+                            addAll(incomeTypeDB.getAllIncomeType(PreferenceManager.getDefaultSharedPreferences(mContext)
+                                .getString("USERNAME", "")!!))
                         }
                     } else {
                         Toast.makeText(mContext, "Edit failed", Toast.LENGTH_SHORT).show()

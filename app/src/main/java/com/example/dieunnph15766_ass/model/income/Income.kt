@@ -7,6 +7,7 @@ class Income {
     var incomeTypeName:String? = null
     var userName:String? = null
     var incomeAmount:Long? = null
+    var incomeNote:String? = null
 
     constructor(
         incomeID: Long?,
@@ -14,7 +15,8 @@ class Income {
         incomeDate: String?,
         incomeTypeName: String?,
         userName: String?,
-        incomeAmount: Long?
+        incomeAmount: Long?,
+        incomeNote: String?,
     ) {
         this.incomeID = incomeID
         this.incomeName = incomeName
@@ -22,6 +24,7 @@ class Income {
         this.incomeTypeName = incomeTypeName
         this.userName = userName
         this.incomeAmount = incomeAmount
+        this.incomeNote = incomeNote
     }
 
     constructor()
