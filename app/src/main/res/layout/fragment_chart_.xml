@@ -1,14 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.ChartFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Chart Fragment" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_layout_start_day"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ngày bắt đầu"
+            app:endIconDrawable="@drawable/ic_baseline_calendar_today_24"
+            app:endIconMode="custom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext_start_day"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:editable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_layout_end_day"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ngày kết thúc"
+            app:endIconDrawable="@drawable/ic_baseline_calendar_today_24"
+            app:endIconMode="custom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext_end_day"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:editable="false" />
+            />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textview_day_input_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Ngay khong hop le"
+            android:textColor="@color/design_default_color_error"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/button_calculate"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thống kê"
+            android:textColor="@color/light_green" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng thu:" />
+
+            <TextView
+                android:id="@+id/txt_income2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_income"
+                android:text="Tổng chi:" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_income2"
+                android:text="Lời/lỗ " />
+
+            <TextView
+                android:id="@+id/txt_total_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="0"
+                android:textColor="@color/light_green" />
+
+            <TextView
+                android:id="@+id/txt_total_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_total_income"
+                android:layout_alignParentEnd="true"
+                android:text="0"
+                android:textColor="@color/design_default_color_error" />
+
+            <TextView
+                android:id="@+id/txt_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_total_expense"
+                android:layout_alignParentEnd="true"
+                android:text="0" />
+
+
+        </RelativeLayout>
+
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart_income"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart_expense"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="32dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="100dp"/>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

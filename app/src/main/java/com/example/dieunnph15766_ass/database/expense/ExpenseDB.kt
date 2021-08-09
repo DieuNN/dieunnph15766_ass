@@ -60,17 +60,16 @@ class ExpenseDB(private val db: Database) : ExpenseDAO {
     override fun editExpense(expense: Expense): Boolean {
         sqliteDatabase = db.writableDatabase
         val values = ContentValues()
-        values.put("EXPENSE_ID", expense.expenseID)
         values.put("EXPENSE_NAME", expense.expenseName)
         values.put("EXPENSE_DATE", expense.expenseDate)
         values.put("EXPENSE_TYPE_NAME", expense.expenseTypeName)
-        values.put("USER_ID", expense.userName)
+        values.put("USERNAME", expense.userName)
         values.put("EXPENSE_AMOUNT", expense.expenseAmount)
         return sqliteDatabase!!.update(
             Database.TABLE_EXPENSE,
             values,
-            "EXPENSE_ID = ?",
-            arrayOf(expense.expenseID.toString() + "")
+            "EXPENSE_NAME = ?",
+            arrayOf(expense.expenseName.toString() + "")
         ) > 0
     }
 
@@ -78,8 +77,8 @@ class ExpenseDB(private val db: Database) : ExpenseDAO {
         sqliteDatabase = db.writableDatabase
         return sqliteDatabase!!.delete(
             Database.TABLE_EXPENSE,
-            "EXPENSE_ID = ?",
-            arrayOf(expense.expenseID.toString() + "")
+            "EXPENSE_NAME = ?",
+            arrayOf(expense.expenseName.toString() + "")
         ) > 0
     }
 }

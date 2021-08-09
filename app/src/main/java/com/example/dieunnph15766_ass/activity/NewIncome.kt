@@ -21,6 +21,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class NewIncome : AppCompatActivity() {
+    var isEditting = false
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +55,19 @@ class NewIncome : AppCompatActivity() {
             element.incomeTypeName?.let { listData.add(it) }
         }
 
-        if(listData.size == 0) {
+        if (listData.size == 0) {
             listData.add("")
         }
+
+        val intent = intent
+        if (intent != null) {
+            isEditting = true
+            text_input_new_income_name.setText(intent.getStringExtra("IncomeName"))
+            text_input_new_income_type.setText(intent.getStringExtra("IncomeType"))
+            text_input_new_income_date.setText(intent.getStringExtra("IncomeDate"))
+            text_input_new_income_amount.setText(intent.getLongExtra("IncomeAmount", 0).toString())
+        }
+
 
         // Set data for auto AutoCompleteTextView
         val arrayAdapter = ArrayAdapter<String>(
@@ -64,6 +76,7 @@ class NewIncome : AppCompatActivity() {
             listData
         )
         text_input_new_income_type.setAdapter(arrayAdapter)
+        Toast.makeText(this, isEditting.toString(), Toast.LENGTH_SHORT).show()
         button_save_new_income.setOnClickListener {
             // Validate
             if (validate()) {
@@ -71,9 +84,9 @@ class NewIncome : AppCompatActivity() {
 
                 val incomeDB = IncomeDB(database)
 
-                if (incomeDB.newIncome(
+                if (incomeDB.editIncome(
                         Income(
-                             incomeID = null,
+                            null,
                             text_input_new_income_name.text.toString(),
                             text_input_new_income_date.text.toString(),
                             text_input_new_income_type.text.toString(),
@@ -83,43 +96,73 @@ class NewIncome : AppCompatActivity() {
                         )
                     )
                 ) {
-                    Toast.makeText(this, resources.getString(R.string.successfully), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        resources.getString(R.string.successfully),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     val resultIntent = Intent()
                     resultIntent.putExtra("successful", true)
-                    setResult(0, resultIntent)
+                    setResult(1, resultIntent)
                     onBackPressed()
                 } else {
-                    Toast.makeText(this, resources.getString(R.string.failed), Toast.LENGTH_SHORT).show()
+                    if (incomeDB.newIncome(
+                            Income(
+                                null,
+                                text_input_new_income_name.text.toString(),
+                                text_input_new_income_date.text.toString(),
+                                text_input_new_income_type.text.toString(),
+                                PreferenceManager.getDefaultSharedPreferences(this)
+                                    .getString("USERNAME", ""),
+                                text_input_new_income_amount.text.toString().toLong()
+                            )
+                        )
+                    ) {
+                        Toast.makeText(
+                            this,
+                            resources.getString(R.string.successfully),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("successful", true)
+                        setResult(0, resultIntent)
+                        onBackPressed()
+
+                    }
                 }
 
+
             }
-        }
 
-        // If user did not choose date yet, it becomes error, when view lost focus, remove error message
-        text_input_new_income_date.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                text_input_layout_new_income_date.error = null
+            // If user did not choose date yet, it becomes error, when view lost focus, remove error message
+            text_input_new_income_date.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    text_input_layout_new_income_date.error = null
+                }
             }
+
+
         }
-
-
     }
 
     private fun validate(): Boolean {
         if (text_input_new_income_name.text.toString().isEmpty()) {
-            text_input_layout_new_income_name.error = resources.getString(R.string.cannot_be_empty)
+            text_input_layout_new_income_name.error =
+                resources.getString(R.string.cannot_be_empty)
             return false
         } else {
             text_input_layout_new_income_name.error = null
         }
         if (text_input_new_income_note.text.toString().isEmpty()) {
-            text_input_layout_new_income_note.error = resources.getString(R.string.cannot_be_empty)
+            text_input_layout_new_income_note.error =
+                resources.getString(R.string.cannot_be_empty)
             return false
         } else {
             text_input_layout_new_income_note.error = null
         }
         if (text_input_new_income_type.text.toString().isEmpty()) {
-            text_input_layout_new_income_type.error = resources.getString(R.string.didnot_choose)
+            text_input_layout_new_income_type.error =
+                resources.getString(R.string.didnot_choose)
             return false
         } else {
             text_input_layout_new_income_type.error = null

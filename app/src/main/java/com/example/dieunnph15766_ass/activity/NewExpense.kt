@@ -14,18 +14,15 @@ import com.example.dieunnph15766_ass.R
 import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.database.expense.ExpenseDB
 import com.example.dieunnph15766_ass.database.expense.ExpenseTypeDB
-import com.example.dieunnph15766_ass.database.income.IncomeDB
-import com.example.dieunnph15766_ass.database.income.IncomeTypeDB
 import com.example.dieunnph15766_ass.model.expense.Expense
 import com.example.dieunnph15766_ass.model.expense.ExpenseType
-import com.example.dieunnph15766_ass.model.income.Income
-import com.example.dieunnph15766_ass.model.income.IncomeType
 import kotlinx.android.synthetic.main.activity_new_expense.*
-import kotlinx.android.synthetic.main.activity_new_income.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 class NewExpense : AppCompatActivity() {
+    var isEditting1 = false
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,16 +46,27 @@ class NewExpense : AppCompatActivity() {
         // Get data from Income Type
         val database = Database(this)
         var expenseTypeDB = ExpenseTypeDB(database)
-        var listExpenseType: ArrayList<ExpenseType> = expenseTypeDB.getAllExpense()
+        var listExpenseType: ArrayList<ExpenseType> = expenseTypeDB.getAllExpenseType()
 
         var listData = ArrayList<String>()
 
         for (element in listExpenseType) {
-            element.expenseName?.let { listData.add(it) }
+            element.expenseTypeName?.let { listData.add(it) }
         }
 
-        if(listData.size == 0) {
+        if (listData.size == 0) {
             listData.add("")
+        }
+
+        val intent = intent
+        if (intent != null) {
+            isEditting1 = true
+            text_input_new_expense_name.setText(intent.getStringExtra("ExpenseName"))
+            text_input_new_expense_type.setText(intent.getStringExtra("ExpenseType"))
+            text_input_new_expense_date.setText(intent.getStringExtra("ExpenseDate"))
+            text_input_new_expense_amount.setText(
+                intent.getLongExtra("ExpenseAmount", 0).toString()
+            )
         }
 
         // Set data for auto AutoCompleteTextView
@@ -68,6 +76,11 @@ class NewExpense : AppCompatActivity() {
             listData
         )
         text_input_new_expense_type.setAdapter(arrayAdapter)
+        Toast.makeText(
+            this,
+            isEditting1.toString(),
+            Toast.LENGTH_SHORT
+        ).show()
         button_save_new_expense.setOnClickListener {
             // Validate
             if (validate()) {
@@ -75,31 +88,56 @@ class NewExpense : AppCompatActivity() {
 
                 val expenseDB = ExpenseDB(database)
 
-                if (expenseDB.newExpense(
+                if (expenseDB.editExpense(
                         Expense(
-                            expenseID = null,
+                            null,
                             text_input_new_expense_name.text.toString(),
                             text_input_new_expense_date.text.toString(),
                             text_input_new_expense_type.text.toString(),
                             PreferenceManager.getDefaultSharedPreferences(this)
                                 .getString("USERNAME", ""),
-                            text_input_new_expense_amount.text.toString().toLong()
+                            text_input_new_expense_amount.text.toString().toLong(),
                         )
                     )
                 ) {
-                    Toast.makeText(this, resources.getString(R.string.successfully), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        resources.getString(R.string.successfully),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     val resultIntent = Intent()
                     resultIntent.putExtra("successful", true)
-                    setResult(0, resultIntent)
+                    setResult(1, resultIntent)
                     onBackPressed()
                 } else {
-                    Toast.makeText(this, resources.getString(R.string.failed), Toast.LENGTH_SHORT).show()
+                    if (expenseDB.newExpense(
+                            Expense(
+                                null,
+                                text_input_new_expense_name.text.toString(),
+                                text_input_new_expense_date.text.toString(),
+                                text_input_new_expense_type.text.toString(),
+                                PreferenceManager.getDefaultSharedPreferences(this)
+                                    .getString("USERNAME", ""),
+                                text_input_new_expense_amount.text.toString().toLong(),
+                            )
+                        )
+                    ) {
+                        Toast.makeText(
+                            this,
+                            resources.getString(R.string.successfully),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("successful", true)
+                        setResult(0, resultIntent)
+                        onBackPressed()
+                    }
                 }
-
             }
         }
 
-        // If user did not choose date yet, it becomes error, when view lost focus, remove error message
+
+// If user did not choose date yet, it becomes error, when view lost focus, remove error message
         text_input_new_expense_date.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 text_input_layout_new_expense_date.error = null

@@ -29,12 +29,12 @@ class ExpenseTypeArrayAdapter(
         val database = Database(mContext)
         val expenseTypeDB = ExpenseTypeDB(database)
 
-        expenseTypeName.text = mList[position].expenseName
+        expenseTypeName.text = mList[position].expenseTypeName
 
         deleteButton.setOnClickListener {
             AlertDialog.Builder(mContext)
                 .setTitle("Xác nhận xoá")
-                .setMessage("Bạn muốn xoá ${mList[position].expenseName} ?")
+                .setMessage("Bạn muốn xoá ${mList[position].expenseTypeName} ?")
                 .setNegativeButton("Huỷ") { dialog, _ ->
                     dialog.dismiss()
                 }
@@ -43,7 +43,7 @@ class ExpenseTypeArrayAdapter(
                         Toast.makeText(mContext, "Xoá thành công", Toast.LENGTH_SHORT).show()
                         this.apply {
                             clear()
-                            addAll(expenseTypeDB.getAllExpense())
+                            addAll(expenseTypeDB.getAllExpenseType())
                         }
                     } else {
                         Toast.makeText(mContext, "Xoá thất bại", Toast.LENGTH_SHORT).show()
@@ -55,7 +55,7 @@ class ExpenseTypeArrayAdapter(
 
         editButton.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("bundle", mList[position].expenseName)
+            bundle.putString("bundle", mList[position].expenseTypeName)
 
             val builder = AlertDialog.Builder(mContext)
             val input = EditText(mContext)
@@ -83,7 +83,7 @@ class ExpenseTypeArrayAdapter(
                         Toast.makeText(mContext, "Edit successfully", Toast.LENGTH_SHORT).show()
                         this.apply {
                             clear()
-                            addAll(expenseTypeDB.getAllExpense())
+                            addAll(expenseTypeDB.getAllExpenseType())
                         }
                     } else {
                         Toast.makeText(mContext, "Edit failed", Toast.LENGTH_SHORT).show()

@@ -53,7 +53,6 @@ class IncomeDB(private val db: Database) : IncomeDao {
     override fun editIncome(income: Income): Boolean {
         sqliteDatabase = db.writableDatabase
         val values = ContentValues()
-        values.put("INCOME_ID", income.incomeID)
         values.put("INCOME_NAME", income.incomeName)
         values.put("INCOME_DATE", income.incomeDate)
         values.put("INCOME_TYPE_NAME", income.incomeTypeName)
@@ -62,8 +61,8 @@ class IncomeDB(private val db: Database) : IncomeDao {
         return sqliteDatabase!!.update(
             Database.TABLE_INCOME,
             values,
-            "INCOME_ID = ?",
-            arrayOf("" + income.incomeID)
+            "INCOME_NAME = ?",
+            arrayOf("" + income.incomeName)
         ) > 0
     }
 
@@ -71,8 +70,8 @@ class IncomeDB(private val db: Database) : IncomeDao {
         sqliteDatabase = db.writableDatabase
         return sqliteDatabase!!.delete(
             Database.TABLE_INCOME,
-            "INCOME_ID = ?",
-            arrayOf("" + income.incomeID)
+            "INCOME_NAME = ?",
+            arrayOf("" + income.incomeName)
         ) > 0
     }
 }

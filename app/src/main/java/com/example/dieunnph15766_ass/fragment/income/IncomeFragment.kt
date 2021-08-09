@@ -1,9 +1,11 @@
 package com.example.dieunnph15766_ass.fragment.income
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,6 +18,7 @@ import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.database.income.IncomeDB
 import com.example.dieunnph15766_ass.model.income.Income
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.lang.ProcessBuilder.Redirect.to
 
 class IncomeFragment
     : Fragment() {
@@ -41,7 +44,7 @@ class IncomeFragment
 
         incomeList = incomeDB.getAllIncomes()
 
-        adapter = RecyclerViewIncomeAdapter(incomeList)
+        adapter = RecyclerViewIncomeAdapter(requireContext(), incomeList)
 
         recyclerview.layoutManager = layoutManager
         recyclerview.adapter = adapter
@@ -51,19 +54,68 @@ class IncomeFragment
         floatingActionButton.setOnClickListener {
             startActivityForResult(Intent(requireContext(), NewIncome::class.java), 0)
         }
+
+        recyclerview.addOnScrollListener( object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if(!recyclerView.canScrollVertically(1)) {
+                    floatingActionButton.apply {
+                        visibility = View.INVISIBLE
+                        isEnabled = false
+                    }
+                } else {
+                    floatingActionButton.apply {
+                        visibility = View.VISIBLE
+                        isEnabled = true
+                    }
+                }
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 0) {
-            if(resultCode == 0) {
-                isInsertSuccess = data?.getBooleanExtra("successful", false)
+//                isInsertSuccess = data?.getBooleanExtra("successful", false)
                 incomeList.clear()
                 incomeList = incomeDB.getAllIncomes()
-                adapter = RecyclerViewIncomeAdapter(incomeList)
+                adapter = RecyclerViewIncomeAdapter(requireContext(), incomeList)
                 recyclerview.adapter = adapter
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            RecyclerViewIncomeAdapter.DELETE -> apply {
+                AlertDialog.Builder(requireContext())
+                    .apply {
+                        setTitle("Xác nhận xoá")
+                        setMessage("Bạn có chắc muốn xoá không?")
+                        setNegativeButton("Huỷ") {dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        setPositiveButton("Xoá") {_, _ ->
+                            adapter.removeIncome(item.groupId)
+                            Toast.makeText(requireContext(), "Xoá thành công!", Toast.LENGTH_SHORT).show()
+                        }
+                        create()
+                        show()
+                    }
+
+            }
+            RecyclerViewIncomeAdapter.EDIT -> apply {
+                adapter.editIncome(item.groupId)
             }
         }
+        return super.onContextItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        incomeList.clear()
+        incomeList = incomeDB.getAllIncomes()
+        adapter = RecyclerViewIncomeAdapter(requireContext(), incomeList)
+        recyclerview.adapter = adapter
     }
 }

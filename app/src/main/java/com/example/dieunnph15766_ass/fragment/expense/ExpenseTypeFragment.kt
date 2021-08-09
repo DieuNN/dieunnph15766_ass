@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.dieunnph15766_ass.R
@@ -14,7 +13,6 @@ import com.example.dieunnph15766_ass.adapter.ExpenseTypeArrayAdapter
 import com.example.dieunnph15766_ass.database.Database
 import com.example.dieunnph15766_ass.database.expense.ExpenseTypeDB
 import com.example.dieunnph15766_ass.dialog.CustomDialogNewExpenseType
-import com.example.dieunnph15766_ass.dialog.CustomDialogNewIncomeType
 import com.example.dieunnph15766_ass.model.expense.ExpenseType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -48,7 +46,7 @@ class ExpenseTypeFragment : Fragment(), CustomDialogNewExpenseType.OnInputSelect
         adapter = ExpenseTypeArrayAdapter(
             requireContext(),
             R.layout.expense_type_row,
-            expenseTypeDB.getAllExpense()
+            expenseTypeDB.getAllExpenseType()
         )
         listView.adapter = adapter
     }
@@ -61,14 +59,10 @@ class ExpenseTypeFragment : Fragment(), CustomDialogNewExpenseType.OnInputSelect
             PreferenceManager.getDefaultSharedPreferences(context).getString("USERNAME", "")
         if (expenseTypeDB.newExpenseType(ExpenseType(null, text, username))) {
             Toast.makeText(context, "Add successfully", Toast.LENGTH_SHORT).show()
-            adapter = ExpenseTypeArrayAdapter(
-                requireContext(),
-                R.layout.expense_type_row,
-                expenseTypeDB.getAllExpense()
-            )
             adapter.apply {
                 clear()
-                addAll(expenseTypeDB.getAllExpense())
+                addAll(expenseTypeDB.getAllExpenseType())
+                notifyDataSetChanged()
             }
         } else {
             Toast.makeText(context, "Add Failed", Toast.LENGTH_SHORT).show()

@@ -3,7 +3,7 @@ package com.example.dieunnph15766_ass.dao.expense
 import com.example.dieunnph15766_ass.model.expense.ExpenseType
 
 interface ExpenseTypeDAO {
-    fun getAllExpense(): ArrayList<ExpenseType>
+    fun getAllExpenseType(): ArrayList<ExpenseType>
 
     fun getExpenseType(index: Int): ExpenseType
 

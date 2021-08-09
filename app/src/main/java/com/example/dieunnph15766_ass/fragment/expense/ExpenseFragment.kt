@@ -1,9 +1,11 @@
 package com.example.dieunnph15766_ass.fragment.expense
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -24,9 +26,9 @@ class ExpenseFragment : Fragment() {
     lateinit var adapter: RecyclerViewExpenseAdapter
     lateinit var database: Database
     lateinit var expenseDB: ExpenseDB
-    lateinit var expenseList:ArrayList<Expense>
+    lateinit var expenseList: ArrayList<Expense>
     lateinit var recyclerview: RecyclerView
-    var isInsertSuccess:Boolean? = false
+    var isInsertSuccess: Boolean? = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,28 +47,76 @@ class ExpenseFragment : Fragment() {
 
         expenseList = expenseDB.getAllExpense()
 
-        adapter = RecyclerViewExpenseAdapter(expenseList)
+        adapter = RecyclerViewExpenseAdapter(requireContext(), expenseList)
 
         recyclerview.layoutManager = LinearLayoutManager(requireContext())
         recyclerview.adapter = adapter
 
 
         fab.setOnClickListener {
-            startActivityForResult(Intent(requireContext(), NewExpense::class.java), 0)
+            startActivityForResult(Intent(requireContext(), NewExpense::class.java), 101)
         }
+
+        recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerview.canScrollVertically(1)) {
+                    fab.apply {
+                        visibility = View.INVISIBLE
+                        isEnabled = false
+                    }
+                } else {
+                    fab.apply {
+                        visibility = View.VISIBLE
+                        isEnabled = true
+                    }
+                }
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 0 ) {
-            if(resultCode == 0) {
-                isInsertSuccess = data?.getBooleanExtra("successful", false)
-                expenseList.clear()
-                expenseList = expenseDB.getAllExpense()
-                adapter = RecyclerViewExpenseAdapter(expenseList)
-                recyclerview.adapter = adapter
+        isInsertSuccess = data?.getBooleanExtra("successful", false)
+        expenseList.clear()
+        expenseList = expenseDB.getAllExpense()
+        adapter = RecyclerViewExpenseAdapter(requireContext(), expenseList)
+        recyclerview.adapter = adapter
+
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            RecyclerViewExpenseAdapter.DELETE -> apply {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle("Xác nhận xoá")
+                    setMessage("Bạn có chắc muốn xoá không?")
+                    setNegativeButton("Huỷ") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    setPositiveButton("Xoá") { _, _ ->
+                        adapter.removeExpense(item.groupId)
+                        Toast.makeText(requireContext(), "Xoá thành công!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    create()
+                    show()
+                }
+            }
+            RecyclerViewExpenseAdapter.EDIT -> {
+                adapter.editExpense(item.groupId)
             }
         }
+        return super.onContextItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        expenseList.clear()
+        expenseList = expenseDB.getAllExpense()
+        adapter = RecyclerViewExpenseAdapter(requireContext(), expenseList)
+        recyclerview.adapter = adapter
     }
 }
